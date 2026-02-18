@@ -3,19 +3,19 @@ package com.monopoly.plateau.modele.constantes;
 import static com.monopoly.plateau.modele.constantes.TypeCase.*;
 
 public enum Case {
-    DEPART("Départ", RECEVOIR, 200, null),
+    DEPART("Départ", ARGENT, 200, null),
 
     CAISSE_COMMUNAUTE("Caisse de communauté", PIOCHER, null, null),
     CHANCE("Chance", PIOCHER, null, null),
 
-    IMPOTS("Impôts sur le revenu", PAYER, -200, null),
+    IMPOTS("Impôts sur le revenu", ARGENT, -200, null),
 
 
     SIMPLE_VISITE_PRISON("Simple visite / Prison", AUCUN_OU_PRISON, null, null),
     PARC_GRATUIT("Parc Gratuit", DEPLACEMENT, null, null),
 
     ALLER_EN_PRISON("Aller en prison", DEPLACEMENT, null, null),
-    LUXE("Taxe de luxe", PAYER, -100, null),
+    LUXE("Taxe de luxe", ARGENT, -100, null),
 
     BELLEVILLE("Boulevard de Belleville", PROPRIETE, 60, Groupe.MARRON),
     LECOURBE("Rue Lecourbe", PROPRIETE, 60, Groupe.MARRON),
