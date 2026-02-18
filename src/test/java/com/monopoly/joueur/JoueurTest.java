@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,9 +20,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class JoueurTest {
-
-    @Mock
-    private Des desMock;
 
     @InjectMocks
     Joueur joueur;

@@ -5,7 +5,6 @@ import java.util.List;
 
 public final class Constantes {
 
-    public static final int ARGENT_INITIAL = 1500;
     public static final int NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON = 3;
 
     public static final List<Case> PLATEAU = List.of(
