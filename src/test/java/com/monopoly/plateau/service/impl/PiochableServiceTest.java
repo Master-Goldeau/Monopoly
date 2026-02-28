@@ -67,11 +67,9 @@ class PiochableServiceTest {
                 CartesChance.LIBERE_PRISON,
                 CartesChance.REPARATIONS,
                 CartesChance.AVANCEZ_BOULEVARD_VILLETTE,
-                CartesChance.AVANCEZ_GARE_LYON,
                 CartesChance.AMENDE_EXCES_VITESSE,
-                CartesChance.FRAIS_SCOLARITE,
-                CartesChance.PRESIDENT_CONSEIL,
-                CartesChance.IMMEUBLE_PRET_RAPPORT_2
+                CartesChance.PRESIDENT_CONSEIL
+
         );
         Piochable cartePiocheeAttendue = piocheChance.get(0);
         List<Piochable> piocheAttendue = List.of(
@@ -85,11 +83,8 @@ class PiochableServiceTest {
                 CartesChance.LIBERE_PRISON,
                 CartesChance.REPARATIONS,
                 CartesChance.AVANCEZ_BOULEVARD_VILLETTE,
-                CartesChance.AVANCEZ_GARE_LYON,
                 CartesChance.AMENDE_EXCES_VITESSE,
-                CartesChance.FRAIS_SCOLARITE,
                 CartesChance.PRESIDENT_CONSEIL,
-                CartesChance.IMMEUBLE_PRET_RAPPORT_2,
                 CartesChance.RUE_DE_LA_PAIX
         );
 

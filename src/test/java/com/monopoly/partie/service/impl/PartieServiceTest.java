@@ -12,6 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,14 +30,19 @@ class PartieServiceTest {
     void initialiserPartie_devrait_initialiser_une_partie_avec_les_joueurs_et_les_pioches() {
         //Given
         Joueur joueur1 = new Joueur(Pion.CHAPEAU);
+        Joueur joueur2 = new Joueur(Pion.FER_A_REPASSER);
+        Joueur joueur3 = new Joueur(Pion.CANON);
+        Joueur joueur4 = new Joueur(Pion.CHIEN);
+        List<Joueur> joueurs = List.of(joueur1, joueur2, joueur3, joueur4);
 
         //When
-        Partie nouvellePartie = partieService.initialiserPartie();
+        Partie nouvellePartie = partieService.initialiserPartie(joueurs);
 
         //Then
+        assertThat(nouvellePartie).isNotNull();
+        assertThat(nouvellePartie.joueurs()).containsExactlyElementsOf(joueurs);
 
         then(piochableService).should(Mockito.times(1)).initialiserPioche(CartesChance.class);
         then(piochableService).should(Mockito.times(1)).initialiserPioche(CartesChance.class);
     }
 }
-

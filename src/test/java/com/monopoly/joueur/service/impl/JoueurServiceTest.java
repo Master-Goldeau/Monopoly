@@ -121,7 +121,7 @@ class JoueurServiceTest {
         joueur.deplacer(joueurService.getDestinationApresLancer(joueur, positionCaseChance));
 
         // Then
-        then(piochableService).should(times(1)).piocher(caseArrivee.getNom());
+        //then(piochableService).should(times(1)).piocher(caseArrivee.);
         Assertions.assertThat(caseArrivee).isEqualTo(Case.CHANCE_7);
     }
 

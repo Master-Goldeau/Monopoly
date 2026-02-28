@@ -9,7 +9,6 @@ import static com.monopoly.plateau.Constantes.CAISSE_DE_COMMUNAUTE;
 import static com.monopoly.plateau.Constantes.CHANCE;
 
 public record Partie(
-        int nombreJoueurs,
         Joueur joueurCourant,
         List<Joueur> joueurs,
         List<Piochable> piocheCartesChance,

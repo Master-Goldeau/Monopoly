@@ -1,6 +1,7 @@
 package com.monopoly.plateau;
 
 import com.monopoly.joueur.model.Joueur;
+import com.monopoly.joueur.model.Pion;
 import com.monopoly.joueur.service.impl.JoueurService;
 import com.monopoly.plateau.constantes.Case;
 import com.monopoly.plateau.pioche.service.IPiochableService;
@@ -41,7 +42,7 @@ class PlateauTest {
     @Test
     void statistiquesDePassageSurChaqueCase() {
         long nbTours = 5159780352L; // 12^9, pour de bonnes stats
-        Joueur joueur = new Joueur();
+        Joueur joueur = new Joueur(Pion.CHAUSSURE);
         Map<Integer, Long> passages = new HashMap<>();
         for (long i = 0L; i < nbTours; i++) {
             int lancer = joueurService.lancerDes(joueur);
