@@ -11,6 +11,7 @@ public final class Constantes {
 
     public static final int NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON = 3;
     public static final int SOMME_DE_DEPART = 1500;
+    public static final int SALAIRE_CASE_DEPART = 200;
 
     public static final int NOMBRE_TOTAL_DE_CARTE_CHANCE_OU_CAISSE_DE_COMMUNAUTE = 16;
 
