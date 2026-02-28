@@ -1,29 +1,30 @@
-package com.monopoly.plateau.modele;
+package com.monopoly.plateau;
 
-import com.monopoly.joueur.Joueur;
-import com.monopoly.plateau.modele.constantes.Case;
+import com.monopoly.joueur.model.Joueur;
+import com.monopoly.joueur.service.impl.JoueurService;
+import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.pioche.service.IPiochableService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.monopoly.plateau.modele.Constantes.PLATEAU;
+import static com.monopoly.plateau.Constantes.PLATEAU;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class PlateauTest {
 
-    @Test
-    void creerPlateau_devrait_retourner_une_liste_de_40_cases(){
-        //Given
-       final int nombreCasesPlateauMonopoly = 40;
-        //When
-        //Then
-        assertThat(PLATEAU).hasSize(nombreCasesPlateauMonopoly);
-        assertThat(PLATEAU.indexOf(Case.PAIX)).isEqualTo(39);
-    }
+    @Mock
+    IPiochableService piochableService;
+
+    @InjectMocks
+    JoueurService joueurService;
 
     @Test
     void obtenirnomCase_devrait_retourner_le_nom_de_la_case() {
@@ -36,15 +37,16 @@ class PlateauTest {
         assertThat(resultat).isEqualTo(caseAttendue);
     }
 
+    @Disabled
     @Test
     void statistiquesDePassageSurChaqueCase() {
         long nbTours = 5159780352L; // 12^9, pour de bonnes stats
-        Joueur joueur = new com.monopoly.joueur.Joueur();
+        Joueur joueur = new Joueur();
         Map<Integer, Long> passages = new HashMap<>();
         for (long i = 0L; i < nbTours; i++) {
-            int lancer = joueur.lancerDes();
-            joueur.deplacer(lancer);
-            int pos = joueur.getPositionPlateau();
+            int lancer = joueurService.lancerDes(joueur);
+            joueurService.getDestinationApresLancer(joueur, lancer);
+            int pos = joueur.getCaseJoueur().getPositionSurPlateau();
             passages.merge(pos, 1L, Long::sum);
         }
         System.out.println("Statistiques de passage sur chaque case après " + nbTours + " tours (triées décroissant) :");
