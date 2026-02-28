@@ -1,5 +1,6 @@
 package com.monopoly.plateau.service.impl;
 
+import com.monopoly.plateau.pioche.model.CartesCaisseDeCommunaute;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
@@ -9,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -20,17 +21,18 @@ class PiochableServiceTest {
     private final IPiochableService piochableService = new PiochableService();
 
     public static Stream<Arguments> ClassesPiochables() {
+        List<Piochable> cartesChanceAvecDoubleGare = new ArrayList<>(List.of(CartesChance.values()));
+        cartesChanceAvecDoubleGare.add(CartesChance.PROCHAINE_GARE);
         return Stream.of(
-                Arguments.of(CartesChance.class)
-                //Arguments.of(CartesCaisseDeCommunaute.class)
+                Arguments.of(CartesChance.class, cartesChanceAvecDoubleGare),
+                Arguments.of(CartesCaisseDeCommunaute.class, List.of(CartesCaisseDeCommunaute.values()))
         );
     }
 
     @ParameterizedTest
     @MethodSource("ClassesPiochables")
-    void initialiser_pioche_devrait_retourner_un_set_de_16_piochables(Class<? extends Piochable> classePiochable) {
+    void initialiser_pioche_devrait_retourner_un_set_de_16_piochables(Class<? extends Piochable> classePiochable, List<Piochable> cartesAtendues) {
         //Given
-        List<Piochable> cartesAttendues = Arrays.asList(CartesChance.values());
 
         //When
         List<Piochable> resultat = piochableService.initialiserPioche(classePiochable);
@@ -38,7 +40,7 @@ class PiochableServiceTest {
         //Then
         assertThat(resultat)
                 .hasSize(16)
-                .containsExactlyInAnyOrderElementsOf(cartesAttendues);
+                .containsExactlyInAnyOrderElementsOf(cartesAtendues);
     }
 
     @Test
@@ -55,7 +57,7 @@ class PiochableServiceTest {
     @Test
     void piocherCartePiochable_devrait_positionner_la_premiere_carte_de_la_liste_en_derniere_position_avant_de_la_retourner() {
         //Given
-        List<Piochable> piocheChance = List.of(
+        ArrayList<Piochable> piocheChance = new ArrayList<>(List.of(
                 CartesChance.RUE_DE_LA_PAIX,
                 CartesChance.GARE_MONTPARNASSE,
                 CartesChance.PRET_IMMOBILIER,
@@ -68,11 +70,10 @@ class PiochableServiceTest {
                 CartesChance.REPARATIONS,
                 CartesChance.AVANCEZ_BOULEVARD_VILLETTE,
                 CartesChance.AMENDE_EXCES_VITESSE,
-                CartesChance.PRESIDENT_CONSEIL
-
+                CartesChance.PRESIDENT_CONSEIL)
         );
-        Piochable cartePiocheeAttendue = piocheChance.get(0);
-        List<Piochable> piocheAttendue = List.of(
+        Piochable cartePiocheeAttendue = piocheChance.getFirst();
+        ArrayList<Piochable> piocheAttendue = new ArrayList<>(List.of(
                 CartesChance.GARE_MONTPARNASSE,
                 CartesChance.PRET_IMMOBILIER,
                 CartesChance.AVENUE_HENRI_MARTIN,
@@ -86,8 +87,7 @@ class PiochableServiceTest {
                 CartesChance.AMENDE_EXCES_VITESSE,
                 CartesChance.PRESIDENT_CONSEIL,
                 CartesChance.RUE_DE_LA_PAIX
-        );
-
+        ));
 
         //When
         Piochable cartePiochee = piochableService.piocher(piocheChance);
