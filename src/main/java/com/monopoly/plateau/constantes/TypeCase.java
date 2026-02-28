@@ -1,4 +1,4 @@
-package com.monopoly.plateau.modele.constantes;
+package com.monopoly.plateau.constantes;
 
 public enum TypeCase {
     NEUTRE,
