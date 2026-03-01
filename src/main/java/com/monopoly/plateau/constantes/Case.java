@@ -70,19 +70,6 @@ public enum Case {
         this.position = position;
     }
 
-    /**
-     * Retourne le prochain service public à partir d'une case Chance donnée.
-     * @param caseChance la case Chance de référence
-     * @return la case ELECTRICITE ou EAU selon la case Chance
-     */
-    public static Case prochainServicePublicDepuisCaseChance(Case caseChance) {
-        return switch (caseChance) {
-            case CHANCE_7, CHANCE_36 -> ELECTRICITE;
-            case CHANCE_22 -> EAU;
-            default -> throw new IllegalArgumentException("La case fournie n'est pas une case Chance.");
-        };
-    }
-
     public static Case depuisPosition(int i) {
         return java.util.Arrays.stream(Case.values())
                 .filter(c -> c.position == i)
