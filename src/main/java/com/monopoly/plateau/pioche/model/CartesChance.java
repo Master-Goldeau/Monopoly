@@ -48,6 +48,11 @@ public enum CartesChance implements Piochable {
         }
     }
 
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
+
     private void definirDestination(Joueur joueur) {
         if (Objects.equals(this.valeurEffet, ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE)) {
             joueur.deplacer(ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueur).commeDestination());

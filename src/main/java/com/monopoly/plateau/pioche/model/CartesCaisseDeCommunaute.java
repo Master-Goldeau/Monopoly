@@ -44,5 +44,10 @@ public enum CartesCaisseDeCommunaute implements Piochable {
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
     }
+
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 }
 
