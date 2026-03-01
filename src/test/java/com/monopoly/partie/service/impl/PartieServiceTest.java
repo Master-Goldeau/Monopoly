@@ -12,7 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Queue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.then;
@@ -33,7 +35,7 @@ class PartieServiceTest {
         Joueur joueur2 = new Joueur(Pion.FER_A_REPASSER);
         Joueur joueur3 = new Joueur(Pion.CANON);
         Joueur joueur4 = new Joueur(Pion.CHIEN);
-        List<Joueur> joueurs = List.of(joueur1, joueur2, joueur3, joueur4);
+        Queue<Joueur> joueurs = new ArrayDeque<>(List.of(joueur1, joueur2, joueur3, joueur4));
 
         //When
         Partie nouvellePartie = partieService.initialiserPartie(joueurs);
