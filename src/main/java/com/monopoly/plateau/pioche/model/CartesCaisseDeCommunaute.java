@@ -36,11 +36,11 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     }
 
     @Override
-    public void appliquerEffet(Partie partieEnCours, Joueur joueur, ValeurEffetCarteChanceOuCaisseDeCommunaute valeur) {
+    public void appliquerEffet(Partie partieEnCours, Joueur joueur) {
         switch (actionCarte) {
-            case BENEFICE -> joueur.recevoirArgent(valeur.commeMontant());
-            case PAYER -> joueur.payer(valeur.commeMontant());
-            case DEPLACEMENT -> joueur.deplacer(valeur.commeDestination());
+            case BENEFICE -> joueur.recevoirArgent(this.valeurEffet.commeMontant());
+            case PAYER -> joueur.payer(this.valeurEffet.commeMontant());
+            case DEPLACEMENT -> joueur.deplacer(this.valeurEffet.commeDestination());
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
     }
