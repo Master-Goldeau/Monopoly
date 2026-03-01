@@ -3,31 +3,32 @@ package com.monopoly.plateau.pioche.service.impl;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Queue;
 
-
+@Service
 public class PiochableService implements IPiochableService {
 
     @Override
-    public ArrayList<Piochable> initialiserPioche(Class<? extends Piochable> classePiochable) {
+    public Queue<Piochable> initialiserPioche(Class<? extends Piochable> classePiochable) {
         Piochable[] valeurs = classePiochable.getEnumConstants();
         if (Objects.equals(CartesChance.class, classePiochable)) {
             valeurs = ajouterDeuxiemeCarteProchaineGareDansPiocheChance(valeurs);
         }
-        ArrayList<Piochable> liste = new ArrayList<>(Arrays.asList(valeurs));
-        Collections.shuffle(liste);
-        return liste;
+        Collections.shuffle(Arrays.asList(valeurs));
+        return new ArrayDeque<>(Arrays.asList(valeurs));
     }
 
     @Override
-    public Piochable piocher(ArrayList<Piochable> pioche) {
-        Piochable cartePiochee =  pioche.getFirst();
-        pioche.removeFirst();
-        pioche.addLast(cartePiochee);
+    public Piochable piocher(Queue<Piochable> pioche) {
+        Piochable cartePiochee =  pioche.peek();
+        pioche.poll();
+        pioche.offer(cartePiochee);
         return cartePiochee;
     }
 
