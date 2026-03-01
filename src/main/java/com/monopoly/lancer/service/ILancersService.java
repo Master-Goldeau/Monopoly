@@ -1,14 +1,13 @@
 package com.monopoly.lancer.service;
 
-import com.monopoly.lancer.service.modele.Des;
-
-import java.util.List;
+import com.monopoly.joueur.model.Joueur;
+import com.monopoly.lancer.service.modele.LancerDes;
 
 public interface ILancersService {
     /**
      * Lance deux dés à six faces et retourne le résultat sous forme d'un Set de dès.
      *
-     * @return un Set de dès contenant exactement deux dés.
+     * @return un LancerDes.
      */
-    List<Des> lancerDeuxDesSix();
+    LancerDes lancerDeuxDesSix(Joueur joueur);
 }
