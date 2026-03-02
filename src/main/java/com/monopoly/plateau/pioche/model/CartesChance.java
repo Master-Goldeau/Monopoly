@@ -4,7 +4,14 @@ import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
 import com.monopoly.plateau.constantes.Case;
 
-import java.util.Objects;
+import java.util.Map;
+import java.util.function.Consumer;
+
+import static com.monopoly.plateau.Constantes.CHANCE;
+import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_CASE_APRES_RECUL_TROIS_CASES;
+import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_GARE_LA_PLUS_PROCHE;
+import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_MONTANT_REPARATIONS;
+import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE;
 
 public enum CartesChance implements Piochable {
     DIVIDENDE(
@@ -35,7 +42,7 @@ public enum CartesChance implements Piochable {
     ),
     SERVICE_PUBLIC(
             ActionCarte.DEPLACEMENT,
-            ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE,
+            DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE,
             """
                     Avancez Jusqu'au prochain service public.
                     S'il n'appartient à personne vous pouvez l'acheter à la banque.
@@ -76,7 +83,7 @@ public enum CartesChance implements Piochable {
     ),
     REPARATIONS(
             ActionCarte.PAYER,
-            ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_MONTANT_REPARATIONS,
+            ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_MONTANT_REPARATIONS, //TODO
             """
                     Faites des réparations sur toutes vos propriétés.
                     Pour chaque maison payez 25€.
@@ -100,7 +107,7 @@ public enum CartesChance implements Piochable {
     ),
     PRESIDENT_CONSEIL(
             ActionCarte.PAYER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(50),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(50), //TODO
             """
                     Vous avez été élu président du conseil d’administration.
                     Payez 50€ à chaque joueur.
@@ -108,7 +115,7 @@ public enum CartesChance implements Piochable {
     ),
     RECULEZ(
             ActionCarte.DEPLACEMENT,
-            ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_CASE_APRES_RECUL_TROIS_CASES,
+            DEFINIR_CASE_APRES_RECUL_TROIS_CASES,
             """
                     Reculez de trois cases
                     """
@@ -123,7 +130,7 @@ public enum CartesChance implements Piochable {
     ),
     PROCHAINE_GARE(
             ActionCarte.DEPLACEMENT,
-            null,
+            DEFINIR_GARE_LA_PLUS_PROCHE,
             """
                     Avancez jusqu’à la prochaine gare.
                     Si elle n'appartient à personne vous pouvez l'acheter à la banque.
@@ -132,23 +139,33 @@ public enum CartesChance implements Piochable {
                     """
     );
 
+    // Variables de classe (static) selon conventions Oracle, juste après les constantes enum
+    private static final Map<ValeurEffetCarteChanceOuCaisseDeCommunaute, Consumer<Joueur>> ACTIONS_SPECIFIQUES = Map.of(
+            DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE, joueur -> joueur.deplacer(ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueur)),
+            DEFINIR_GARE_LA_PLUS_PROCHE, joueur -> joueur.deplacer(ValeurEffetCarteChanceOuCaisseDeCommunaute.trouverProchaineGare(joueur)),
+            DEFINIR_CASE_APRES_RECUL_TROIS_CASES, joueur -> joueur.deplacer(ValeurEffetCarteChanceOuCaisseDeCommunaute.reculerDeTroisCases(joueur)),
+            DEFINIR_MONTANT_REPARATIONS, joueur -> joueur.payer(ValeurEffetCarteChanceOuCaisseDeCommunaute.calculerValeurReparation(CHANCE, joueur))
+    );
+
+    // Variables d'instance
     private final ActionCarte actionCarte;
     private final ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet;
     private final String description;
 
+    // Constructeur
     CartesChance(ActionCarte actionCarte, ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet, String description) {
         this.actionCarte = actionCarte;
         this.valeurEffet = valeurEffet;
         this.description = description;
     }
 
+    // Méthodes
     @Override
     public void appliquerEffet(Partie partieEnCours, Joueur joueur) {
         switch (actionCarte) {
             case BENEFICE -> joueur.recevoirArgent(this.valeurEffet.commeMontant());
             case PAYER -> joueur.payer(this.valeurEffet.commeMontant());
             case DEPLACEMENT -> definirDestination(joueur);
-
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
     }
@@ -159,8 +176,9 @@ public enum CartesChance implements Piochable {
     }
 
     private void definirDestination(Joueur joueur) {
-        if (Objects.equals(this.valeurEffet, ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE)) {
-            joueur.deplacer(ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueur).commeDestination());
+        if (ACTIONS_SPECIFIQUES.containsKey(this.valeurEffet)) {
+            Consumer<Joueur> action = ACTIONS_SPECIFIQUES.get(this.valeurEffet);
+            action.accept(joueur);
         } else {
             joueur.deplacer(this.valeurEffet.commeDestination());
         }
