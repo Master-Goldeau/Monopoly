@@ -1,11 +1,10 @@
 package com.monopoly.joueur.service;
 
 import com.monopoly.joueur.model.Joueur;
+import com.monopoly.lancer.service.modele.LancerDes;
 import com.monopoly.plateau.constantes.Case;
-import com.monopoly.plateau.pioche.model.Piochable;
 
 public interface IJoueurService {
-    int lancerDes(Joueur joueur);
-    Case getDestinationApresLancer(Joueur joueur, int valeurLancerDes);
-    Piochable piocherCarte(String casePiochable);
+    LancerDes lancerDesEtGererDoublesConsecutifs(Joueur joueur);
+    void deplacer(Joueur joueur, Case destination);
 }

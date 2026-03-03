@@ -6,9 +6,6 @@ import java.util.List;
 
 public final class Constantes {
 
-    public static final String CAISSE_DE_COMMUNAUTE = "Caisse de communauté";
-    public static final String CHANCE = "Chance";
-
     public static final int NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON = 3;
     public static final int SOMME_DE_DEPART = 1500;
     public static final int SALAIRE_CASE_DEPART = 200;

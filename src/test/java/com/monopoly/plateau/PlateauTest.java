@@ -3,6 +3,7 @@ package com.monopoly.plateau;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.model.Pion;
 import com.monopoly.joueur.service.impl.JoueurService;
+import com.monopoly.lancer.service.modele.LancerDes;
 import com.monopoly.plateau.constantes.Case;
 import com.monopoly.plateau.pioche.service.IPiochableService;
 import org.junit.jupiter.api.Disabled;
@@ -45,7 +46,7 @@ class PlateauTest {
         Joueur joueur = new Joueur(Pion.CHAUSSURE);
         Map<Integer, Long> passages = new HashMap<>();
         for (long i = 0L; i < nbTours; i++) {
-            int lancer = joueurService.lancerDes(joueur);
+            LancerDes lancer = joueurService.lancerDesEtGererDoublesConsecutifs(joueur);
             joueurService.getDestinationApresLancer(joueur, lancer);
             int pos = joueur.getCaseJoueur().getPositionSurPlateau();
             passages.merge(pos, 1L, Long::sum);

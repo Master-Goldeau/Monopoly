@@ -67,11 +67,11 @@ class PiochableServiceTest {
                 CartesChance.AVENUE_HENRI_MARTIN,
                 CartesChance.SERVICE_PUBLIC,
                 CartesChance.ALLER_EN_PRISON,
-                CartesChance.AVANCEZ_CASE_DEPART,
+                CartesChance.CASE_DEPART,
                 CartesChance.DIVIDENDE,
                 CartesChance.LIBERE_PRISON,
                 CartesChance.REPARATIONS,
-                CartesChance.AVANCEZ_BOULEVARD_VILLETTE,
+                CartesChance.BOULEVARD_VILLETTE,
                 CartesChance.AMENDE_EXCES_VITESSE,
                 CartesChance.PRESIDENT_CONSEIL)
         );
@@ -83,11 +83,11 @@ class PiochableServiceTest {
                 CartesChance.AVENUE_HENRI_MARTIN,
                 CartesChance.SERVICE_PUBLIC,
                 CartesChance.ALLER_EN_PRISON,
-                CartesChance.AVANCEZ_CASE_DEPART,
+                CartesChance.CASE_DEPART,
                 CartesChance.DIVIDENDE,
                 CartesChance.LIBERE_PRISON,
                 CartesChance.REPARATIONS,
-                CartesChance.AVANCEZ_BOULEVARD_VILLETTE,
+                CartesChance.BOULEVARD_VILLETTE,
                 CartesChance.AMENDE_EXCES_VITESSE,
                 CartesChance.PRESIDENT_CONSEIL,
                 CartesChance.RUE_DE_LA_PAIX

@@ -14,7 +14,7 @@ Fonctionnalité: Déplacement du joueur sur le plateau
       | 31         | 2          | 6          | 39          |
       | 39         | 4          | 1          | 4           |
 
-  Scénario: Un joueur lance les dès et arrive sur la case aller en prison
+  Scénario: Un joueur lance les dés et arrive sur la case aller en prison
     Étant donné un joueur sur la case 19
     Quand il lance les dés et obtient 6 et 5
     Alors il doit se déplacer sur la case 30
@@ -40,12 +40,12 @@ Fonctionnalité: Déplacement du joueur sur le plateau
     Et il doit avoir <argentFinal>
 
     Exemples:
-      | caseJoueur | valeurDes1 | valeurDes2 | caseArrivee | typeCarte | cartePiochee        | caseFinale | argent | argentFinal
-      | 19         | 2          | 1          | 22          | CHANCE    | BOULEVARD_VILLETTE  | 11         | 1500   | 1700
-      | 2          | 3          | 2          | 7           | CHANCE    | RUE_DE_LA_PAIX      | 39         | 94     | 94
-      | 36         | 1          | 1          | 38          | CHANCE    | AVENUE_HENRI_MARTIN | 24         | 1500   | 1700
-      | 36         | 6          | 5          | 7           | CHANCE    | SERVICE_PUBLIC      | 12         | 300    | 300
-      | 17         | 4          | 1          | 22          | CHANCE    | SERVICE_PUBLIC      | 28         | 200    | 200
-      | 31         | 5          | 2          | 38          | CHANCE    | SERVICE_PUBLIC      | 12         | 1000   | 1200
-      | 36         | 1          | 1          | 38          | CHANCE    | CASE_DEPART         | 0          | 342    | 542
-      | 36         | 1          | 1          | 38          | CHANCE    | ALLER_EN_PRISON     | 10         | 648    | 648
+      | caseJoueur | valeurDes1 | valeurDes2 | caseArrivee | typeCarte | cartePiochee        | caseFinale | argent | argentFinal |
+      | 19         | 2          | 1          | 22          | CHANCE    | BOULEVARD_VILLETTE  | 11         | 1500   | 1700        |
+      | 2          | 3          | 2          | 7           | CHANCE    | RUE_DE_LA_PAIX      | 39         | 94     | 94          |
+      | 34         | 1          | 1          | 36          | CHANCE    | AVENUE_HENRI_MARTIN | 24         | 1500   | 1700        |
+      | 36         | 6          | 5          | 7           | CHANCE    | SERVICE_PUBLIC      | 12         | 300    | 300         |
+      | 17         | 4          | 1          | 22          | CHANCE    | SERVICE_PUBLIC      | 28         | 200    | 200         |
+      | 29         | 5          | 2          | 36          | CHANCE    | SERVICE_PUBLIC      | 12         | 1000   | 1200        |
+      | 34         | 1          | 1          | 36          | CHANCE    | CASE_DEPART         | 0          | 342    | 542         |
+      | 34         | 1          | 1          | 36          | CHANCE    | ALLER_EN_PRISON     | 10         | 648    | 648         |

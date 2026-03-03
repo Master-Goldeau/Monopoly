@@ -6,5 +6,7 @@ import com.monopoly.partie.model.Partie;
 public sealed interface Piochable
         permits CartesChance, CartesCaisseDeCommunaute {
     void appliquerEffet(Partie partieEnCours, Joueur joueur);
-    String getDescription();
+    String description();
+    TypePiochable typePiochable();
+    String name();
 }

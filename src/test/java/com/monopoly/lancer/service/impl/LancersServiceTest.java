@@ -2,14 +2,10 @@ package com.monopoly.lancer.service.impl;
 
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.model.Pion;
-import com.monopoly.lancer.service.modele.Des;
 import com.monopoly.lancer.service.modele.LancerDes;
-import com.monopoly.plateau.constantes.Case;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -94,29 +90,6 @@ class LancersServiceTest {
     private static void enregistrerResultatLancer(LancerDes lancerDes, Map<Integer, Integer> probabilitesObservees) {
         int sommeDesDeuxDes = lancerDes.getSomme();
         probabilitesObservees.merge(sommeDesDeuxDes, 1, Integer::sum);
-    }
-
-    @Test
-    void un_joueur_qui_lance_trois_doubles_de_suite_va_en_prison() {
-        // Given
-        Joueur joueur = new Joueur(Case.EAU);
-        try (MockedStatic<Des> mocked = Mockito.mockStatic(Des.class)) {
-            mocked.when(Des::lancer).thenReturn(new Des(6));
-            // When
-            LancerDes lancer1 = lancersService.lancerDeuxDesSix(joueur);
-            LancerDes lancer2 = lancersService.lancerDeuxDesSix(joueur);
-            LancerDes lancer3 = lancersService.lancerDeuxDesSix(joueur);
-
-            // Then
-            // Le joueur fait trois doubles six de suite, il doit être envoyé en prison
-            assertThat(lancer1.de1().valeur()).isEqualTo(6);
-            assertThat(lancer1.de2().valeur()).isEqualTo(6);
-            assertThat(lancer2.de1().valeur()).isEqualTo(6);
-            assertThat(lancer2.de2().valeur()).isEqualTo(6);
-            assertThat(lancer3.de1().valeur()).isEqualTo(6);
-            assertThat(lancer3.de2().valeur()).isEqualTo(6);
-            assertThat(joueur.getDoubleConsecutifs()).isEqualTo(3);
-        }
     }
 
 }

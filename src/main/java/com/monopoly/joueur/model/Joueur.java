@@ -22,7 +22,7 @@ public class Joueur {
     }
 
     //Constructeur pour les TU uniquement
-    public Joueur(Case position){
+    public Joueur(Case position) {
         this.caseJoueur = position;
         this.doubleConsecutifs = 0;
         this.argent = SOMME_DE_DEPART;
@@ -88,7 +88,8 @@ public class Joueur {
         this.argent = this.argent - montant;
     }
 
-    public void deplacer(Case caseDestination) {
-        this.caseJoueur = caseDestination;
+    public boolean peutRejouer() {
+        return this.doubleConsecutifs > 0 &&
+               this.doubleConsecutifs < NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
     }
 }

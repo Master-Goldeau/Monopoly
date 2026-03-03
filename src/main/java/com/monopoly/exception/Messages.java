@@ -6,5 +6,7 @@ public final class Messages {
     public static final String ERREUR_TYPE_INTEGER = "La valeur n'est pas de type Integer.class";
     public static final String ERREUR_TYPE_CASE = "La valeur n'est pas de type Case.class";
 
+    public static final String CASE_NON_CHANCE = "La case fournie n'est pas une case Chance.";
+
     private Messages() {}
 }

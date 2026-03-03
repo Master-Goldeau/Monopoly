@@ -9,5 +9,5 @@ import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 
 @Suite
 @SelectClasspathResource("cucumber")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "cucumber.steps")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.monopoly.steps")
 public class RunCucumberTest {}

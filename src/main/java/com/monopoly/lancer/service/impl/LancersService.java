@@ -14,20 +14,6 @@ public class LancersService implements ILancersService {
     public LancerDes lancerDeuxDesSix(Joueur joueur) {
         Des de1 = lancer();
         Des de2 = lancer();
-        LancerDes resultat = new LancerDes(de1, de2);
-        gererDoubleConsecutifs(joueur, resultat);
-        return resultat;
-    }
-
-    private static void gererDoubleConsecutifs(Joueur joueur, LancerDes resultat) {
-        if (resultat.estUnDouble()) {
-            joueur.setDoubleConsecutifs(joueur.getDoubleConsecutifs()+1);
-        } else {
-            resetDoublesConsecutifs(joueur);
-        }
-    }
-
-    private static void resetDoublesConsecutifs(Joueur joueur) {
-        joueur.setDoubleConsecutifs(0);
+        return new LancerDes(de1, de2);
     }
 }

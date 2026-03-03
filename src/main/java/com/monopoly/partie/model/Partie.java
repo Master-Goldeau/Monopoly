@@ -2,11 +2,9 @@ package com.monopoly.partie.model;
 
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.plateau.pioche.model.Piochable;
+import com.monopoly.plateau.pioche.model.TypePiochable;
 
 import java.util.Queue;
-
-import static com.monopoly.plateau.Constantes.CAISSE_DE_COMMUNAUTE;
-import static com.monopoly.plateau.Constantes.CHANCE;
 
 public record Partie(
         Joueur joueurCourant,
@@ -15,11 +13,10 @@ public record Partie(
         Queue<Piochable> piocheCartesCaisseDeCommunaute
 ) {
 
-    public Queue<Piochable> getPioche(String casePiochable) {
+    public Queue<Piochable> getPioche(TypePiochable casePiochable) {
         return switch (casePiochable) {
             case CHANCE -> piocheCartesChance;
             case CAISSE_DE_COMMUNAUTE -> piocheCartesCaisseDeCommunaute;
-            default -> throw new IllegalArgumentException("Case piochable inconnue : " + casePiochable);
         };
     }
 }

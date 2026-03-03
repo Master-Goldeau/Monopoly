@@ -1,7 +1,9 @@
 package com.monopoly.plateau.constantes;
 
 
-import com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute;
+import com.monopoly.joueur.model.Joueur;
+import com.monopoly.plateau.pioche.model.valeurEffetCarteChanceOuCaisseDeCommunaute;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -44,6 +46,14 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
         );
     }
 
+    public static Stream<Arguments> joueurSurCaseChance() {
+        return Stream.of(
+                Arguments.of(new Joueur(Case.CHANCE_7), Case.ELECTRICITE),
+                Arguments.of(new Joueur(Case.CHANCE_22), Case.EAU),
+                Arguments.of(new Joueur(Case.CHANCE_36), Case.ELECTRICITE)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("typesValeursEffetCarteChanceOuCaisseDeCommunauteInvalides")
     void devrait_throw_exception_si_valeur_effet_carte_chance_ou_caisse_de_communaute_invalide(Object valeurEffetCarteChanceOuCaisseDeCommunauteInvalide) {
@@ -51,7 +61,7 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
 
         // When
         Throwable exception = catchThrowable(
-                () -> new ValeurEffetCarteChanceOuCaisseDeCommunaute(valeurEffetCarteChanceOuCaisseDeCommunauteInvalide));
+                () -> new valeurEffetCarteChanceOuCaisseDeCommunaute(valeurEffetCarteChanceOuCaisseDeCommunauteInvalide));
 
         //Then
         assertThat(exception)
@@ -64,9 +74,19 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
     void devrait_creer_valeur_effet_carte_chance_ou_caisse_de_communaute_valide(Object valeur) {
         // Given
         //When
-        ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffetCarteChanceOuCaisseDeCommunaute = new ValeurEffetCarteChanceOuCaisseDeCommunaute(valeur);
+        valeurEffetCarteChanceOuCaisseDeCommunaute valeurEffetCarteChanceOuCaisseDeCommunaute = new valeurEffetCarteChanceOuCaisseDeCommunaute(valeur);
         //Then
         assertThat(valeurEffetCarteChanceOuCaisseDeCommunaute.valeur()).isEqualTo(valeur);
+    }
+
+    @ParameterizedTest
+    @MethodSource("joueurSurCaseChance")
+    void prochainServicePublic_devrait_retourer_le_prochain_service_public_DepuisCaseChance_selon_position_du_joueur(Joueur joueurSurCaseChance, Case resultatAttendu) {
+        //Given
+        //When
+        Case resultat = valeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueurSurCaseChance);
+        //Then
+        AssertionsForClassTypes.assertThat(resultat).isEqualTo(resultatAttendu);
     }
 }
 
