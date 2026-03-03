@@ -10,7 +10,7 @@ public enum Case {
 
     DEPART("Départ", ARGENT, 200, null,0),
     BELLEVILLE("Boulevard de Belleville", PROPRIETE, 60, Groupe.MARRON,1),
-    CAISSE_COMMUNAUTE_2("Caisse de Communauté 2", PIOCHER, null, null,2),
+    CAISSE_COMMUNAUTE_2(CAISSE_DE_COMMUNAUTE.name(), PIOCHER, null, null,2),
     LECOURBE("Rue Lecourbe", PROPRIETE, 60, Groupe.MARRON,3),
     IMPOTS("Impôts sur le revenu", ARGENT, -200, null,4),
 

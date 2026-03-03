@@ -2,33 +2,43 @@ package com.monopoly.joueur.service.impl;
 
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.model.Pion;
+import com.monopoly.lancer.service.impl.LancersService;
 import com.monopoly.lancer.service.modele.Des;
 import com.monopoly.lancer.service.modele.LancerDes;
 import com.monopoly.partie.service.impl.PartieService;
 import com.monopoly.plateau.constantes.Case;
 import com.monopoly.plateau.pioche.service.impl.PiochableService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Stream;
 
+import static com.monopoly.plateau.Constantes.PLATEAU;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class JoueurServiceTest {
 
-    @Mock
-    PiochableService piochableServiceMock;
+    @Spy
+    PiochableService piochableServiceSpy = new PiochableService();
 
     @Spy
-    PartieService partieServiceSpy = new PartieService(piochableServiceMock);
+    PartieService partieServiceSpy = new PartieService(piochableServiceSpy);
+
+    @Spy
+    LancersService lancersServiceSpy = new LancersService();
+
 
     @InjectMocks
     JoueurService joueurService;
@@ -111,6 +121,32 @@ class JoueurServiceTest {
         joueurService.deplacer(joueur, Case.ALLER_EN_PRISON);
         // Then
         assertThat(joueur.getCaseJoueur()).isEqualTo(Case.SIMPLE_VISITE_PRISON);
+    }
+
+    @Disabled
+    @Test
+    void statistiquesDePassageSurChaqueCase() {
+        long nbTours = 5159780352L; // 12^9, pour de bonnes stats
+        Joueur joueur = new Joueur(Pion.CHAUSSURE);
+        Queue<Joueur> joueurs = new ArrayDeque<>();
+        joueurs.add(joueur);
+        partieServiceSpy.initialiserPartie(joueurs);
+        Map<Integer, Long> passages = new HashMap<>();
+        for (long i = 0L; i < nbTours; i++) {
+            joueurService.jouerTour(joueur); // Utilise la méthode complète
+            int pos = joueur.getCaseJoueur().getPositionSurPlateau();
+            passages.merge(pos, 1L, Long::sum);
+        }
+        System.out.println("Statistiques de passage sur chaque case après " + nbTours + " tours (triées décroissant) :");
+        passages.entrySet().stream()
+                .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                .forEach(entry -> {
+                    int i = entry.getKey();
+                    long count = entry.getValue();
+                    String nomCase = PLATEAU.get(i).name();
+                    double pourCent = 100.0 * count / nbTours;
+                    System.out.printf("Case %2d _%-19s_ : %.2f/100000000%n", i, nomCase, pourCent);
+                });
     }
 
 //    @Test

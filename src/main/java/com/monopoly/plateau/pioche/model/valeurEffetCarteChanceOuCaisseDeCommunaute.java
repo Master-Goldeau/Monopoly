@@ -14,10 +14,10 @@ import static com.monopoly.exception.Messages.ERREUR_TYPE_VALEUR_EFFET_CARTE;
 
 public record valeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
     // Variables statiques en haut du record, selon la convention Java
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_ANNIVERSAIRE = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
+    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_ANNIVERSAIRE = new valeurEffetCarteChanceOuCaisseDeCommunaute(0);
     public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_CASE_APRES_RECUL_TROIS_CASES = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
     public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_GARE_LA_PLUS_PROCHE = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_MONTANT_REPARATIONS = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
+    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_MONTANT_REPARATIONS = new valeurEffetCarteChanceOuCaisseDeCommunaute(0);
     public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
 
     public valeurEffetCarteChanceOuCaisseDeCommunaute {
@@ -68,14 +68,14 @@ public record valeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
 
 
     public int commeMontant() {
-        return Optional.of(valeur)
+        return Optional.ofNullable(valeur)
                 .filter(Integer.class::isInstance)
                 .map(Integer.class::cast)
                 .orElseThrow(() -> new IllegalArgumentException(ERREUR_TYPE_INTEGER));
     }
 
     public Case commeDestination() {
-        return Optional.of(valeur)
+        return Optional.ofNullable(valeur)
                 .filter(Case.class::isInstance)
                 .map(Case.class::cast)
                 .orElseThrow(() -> new IllegalArgumentException(ERREUR_TYPE_CASE));
