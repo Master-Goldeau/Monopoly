@@ -78,12 +78,7 @@ public enum Case {
                 .orElseThrow(() -> new IllegalArgumentException("Aucune case à la position " + i));
     }
 
-    // Méthodes statiques
-    public static Case allerEnPrison() {
-        return Case.SIMPLE_VISITE_PRISON;
-    }
-
-    public int getPositionSurPlateau() {
+    public int positionSurPlateau() {
         return position;
     }
 
@@ -93,13 +88,6 @@ public enum Case {
 
     public String getNom() {
         return nom;
-    }
-
-    public static Case depuisNom(String nom){
-        return java.util.Arrays.stream(Case.values())
-                .filter(c -> c.nom.equals(nom))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Aucune case avec le nom " + nom));
     }
 
     public Optional<Groupe> getGroupe() {
