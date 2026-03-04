@@ -6,11 +6,13 @@ import static com.monopoly.plateau.Constantes.NOMBRE_DOUBLES_CONSECUTIFS_POUR_PR
 import static com.monopoly.plateau.Constantes.SOMME_DE_DEPART;
 
 public class Joueur {
-    private Pion pion;
+    private final Pion pion;
     private Case caseJoueur;
     private int doubleConsecutifs;
     private int argent;
     private boolean possedeCarteLiberePrison;
+    private boolean estEnPrison;
+    private int nombreDeToursEnPrison;
 
     // Constructeurs
     public Joueur(Pion pion) {
@@ -19,6 +21,8 @@ public class Joueur {
         this.argent = SOMME_DE_DEPART;
         this.possedeCarteLiberePrison = false;
         this.pion = pion;
+        this.estEnPrison = false;
+        this.nombreDeToursEnPrison = 0;
     }
 
     //Constructeur pour les TU uniquement
@@ -31,23 +35,23 @@ public class Joueur {
     }
 
     // Getters et Setters
-    public Pion getPion() {
+    public Pion pion() {
         return pion;
     }
 
-    public Case getCaseJoueur() {
+    public Case caseJoueur() {
         return caseJoueur;
     }
 
-    public int getPosition() {
-        return this.caseJoueur.getPositionSurPlateau();
+    public int position() {
+        return this.caseJoueur.positionSurPlateau();
     }
 
     public void setCaseJoueur(Case caseJoueur) {
         this.caseJoueur = caseJoueur;
     }
 
-    public int getDoubleConsecutifs() {
+    public int doubleConsecutifs() {
         return doubleConsecutifs;
     }
 
@@ -59,7 +63,7 @@ public class Joueur {
         return this.doubleConsecutifs == NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
     }
 
-    public int getArgent() {
+    public int argent() {
         return argent;
     }
 
@@ -67,12 +71,24 @@ public class Joueur {
         this.argent = argent;
     }
 
-    public boolean isPossedeCarteLiberePrison() {
-        return possedeCarteLiberePrison;
-    }
-
     public void setPossedeCarteLiberePrison(boolean possedeCarteLiberePrison) {
         this.possedeCarteLiberePrison = possedeCarteLiberePrison;
+    }
+
+    public boolean estEnPrison() {
+        return this.estEnPrison;
+    }
+
+    public void setEstEnPrison(boolean estEnPrison) {
+        this.estEnPrison = estEnPrison;
+    }
+
+    public int nombreDeToursEnPrison() {
+        return nombreDeToursEnPrison;
+    }
+
+    public void setNombreDeToursEnPrison(int nombreDeToursEnPrison) {
+        this.nombreDeToursEnPrison = nombreDeToursEnPrison;
     }
 
     // Méthodes métier
@@ -89,7 +105,7 @@ public class Joueur {
     }
 
     public boolean peutRejouer() {
-        return this.doubleConsecutifs > 0 &&
+        return !this.estEnPrison && this.doubleConsecutifs > 0 &&
                this.doubleConsecutifs < NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
     }
 }
