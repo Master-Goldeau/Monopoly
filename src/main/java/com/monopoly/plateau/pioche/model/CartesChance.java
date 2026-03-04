@@ -179,6 +179,9 @@ public enum CartesChance implements Piochable {
     }
 
     private void definirDestination(Joueur joueur) {
+        //TODO Cette méthode ne dois plus être ici car il faut appeler JoueurService.déplacer pour gérer les règles de passage par la case départ, etc.
+        // Il faut trouver une solution pour faire le lien entre la carte et le service sans que la carte connaisse le service (inversion de dépendance)
+
         if (ACTIONS_SPECIFIQUES.containsKey(this.valeurEffet)) {
             Consumer<Joueur> action = ACTIONS_SPECIFIQUES.get(this.valeurEffet);
             action.accept(joueur);
