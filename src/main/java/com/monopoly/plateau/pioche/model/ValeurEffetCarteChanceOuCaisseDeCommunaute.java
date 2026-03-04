@@ -12,20 +12,20 @@ import static com.monopoly.exception.Messages.ERREUR_TYPE_CASE;
 import static com.monopoly.exception.Messages.ERREUR_TYPE_INTEGER;
 import static com.monopoly.exception.Messages.ERREUR_TYPE_VALEUR_EFFET_CARTE;
 
-public record valeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
+public record ValeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
     // Variables statiques en haut du record, selon la convention Java
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_ANNIVERSAIRE = new valeurEffetCarteChanceOuCaisseDeCommunaute(0);
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_CASE_APRES_RECUL_TROIS_CASES = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_GARE_LA_PLUS_PROCHE = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_MONTANT_REPARATIONS = new valeurEffetCarteChanceOuCaisseDeCommunaute(0);
-    public static final valeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE = new valeurEffetCarteChanceOuCaisseDeCommunaute(null);
+    public static final ValeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_ANNIVERSAIRE = new ValeurEffetCarteChanceOuCaisseDeCommunaute(0);
+    public static final ValeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_CASE_APRES_RECUL_TROIS_CASES = new ValeurEffetCarteChanceOuCaisseDeCommunaute(null);
+    public static final ValeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_GARE_LA_PLUS_PROCHE = new ValeurEffetCarteChanceOuCaisseDeCommunaute(null);
+    public static final ValeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_MONTANT_REPARATIONS = new ValeurEffetCarteChanceOuCaisseDeCommunaute(0);
+    public static final ValeurEffetCarteChanceOuCaisseDeCommunaute DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE = new ValeurEffetCarteChanceOuCaisseDeCommunaute(null);
 
-    public valeurEffetCarteChanceOuCaisseDeCommunaute {
+    public ValeurEffetCarteChanceOuCaisseDeCommunaute {
         verifierTypeValeur(valeur);
     }
 
     public static Case definirProchainServicePublic(Joueur joueurSurCaseChance) {
-        return switch (joueurSurCaseChance.getCaseJoueur()) {
+        return switch (joueurSurCaseChance.caseJoueur()) {
             case CHANCE_7, CHANCE_36 ->Case.ELECTRICITE;
             case CHANCE_22 -> Case.EAU;
             default -> throw new IllegalArgumentException(CASE_NON_CHANCE);
@@ -33,7 +33,7 @@ public record valeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
     }
 
     public static Case trouverProchaineGare(Joueur joueurSurCaseChance) {
-        return switch (joueurSurCaseChance.getCaseJoueur()) {
+        return switch (joueurSurCaseChance.caseJoueur()) {
             case CHANCE_7 -> Case.GARE_DE_LYON;
             case CHANCE_36 -> Case.GARE_MONTPARNASSE;
             case CHANCE_22 -> Case.GARE_DU_NORD;
@@ -42,7 +42,7 @@ public record valeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
     }
 
     public static Case reculerDeTroisCases(Joueur joueurSurCaseChance) {
-        return switch (joueurSurCaseChance.getCaseJoueur()) {
+        return switch (joueurSurCaseChance.caseJoueur()) {
             case CHANCE_7 -> Case.IMPOTS;
             case CHANCE_22 -> Case.PIGALLE;
             case CHANCE_36 -> Case.CAISSE_COMMUNAUTE_33;

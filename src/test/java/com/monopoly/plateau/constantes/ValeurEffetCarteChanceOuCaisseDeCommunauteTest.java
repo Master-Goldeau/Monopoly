@@ -2,7 +2,7 @@ package com.monopoly.plateau.constantes;
 
 
 import com.monopoly.joueur.model.Joueur;
-import com.monopoly.plateau.pioche.model.valeurEffetCarteChanceOuCaisseDeCommunaute;
+import com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -61,7 +61,7 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
 
         // When
         Throwable exception = catchThrowable(
-                () -> new valeurEffetCarteChanceOuCaisseDeCommunaute(valeurEffetCarteChanceOuCaisseDeCommunauteInvalide));
+                () -> new ValeurEffetCarteChanceOuCaisseDeCommunaute(valeurEffetCarteChanceOuCaisseDeCommunauteInvalide));
 
         //Then
         assertThat(exception)
@@ -74,7 +74,7 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
     void devrait_creer_valeur_effet_carte_chance_ou_caisse_de_communaute_valide(Object valeur) {
         // Given
         //When
-        valeurEffetCarteChanceOuCaisseDeCommunaute valeurEffetCarteChanceOuCaisseDeCommunaute = new valeurEffetCarteChanceOuCaisseDeCommunaute(valeur);
+        ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffetCarteChanceOuCaisseDeCommunaute = new ValeurEffetCarteChanceOuCaisseDeCommunaute(valeur);
         //Then
         assertThat(valeurEffetCarteChanceOuCaisseDeCommunaute.valeur()).isEqualTo(valeur);
     }
@@ -84,7 +84,7 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
     void prochainServicePublic_devrait_retourer_le_prochain_service_public_DepuisCaseChance_selon_position_du_joueur(Joueur joueurSurCaseChance, Case resultatAttendu) {
         //Given
         //When
-        Case resultat = valeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueurSurCaseChance);
+        Case resultat = ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueurSurCaseChance);
         //Then
         AssertionsForClassTypes.assertThat(resultat).isEqualTo(resultatAttendu);
     }

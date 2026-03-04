@@ -105,7 +105,7 @@ class JoueurServiceTest {
         joueurService.deplacer(joueur, destination);
 
         //Then
-        assertThat(joueur.getCaseJoueur()).isEqualTo(positionAttendue);
+        assertThat(joueur.caseJoueur()).isEqualTo(positionAttendue);
     }
 
 
@@ -128,7 +128,7 @@ class JoueurServiceTest {
         // When
         joueurService.deplacer(joueur, Case.ALLER_EN_PRISON);
         // Then
-        assertThat(joueur.getCaseJoueur()).isEqualTo(Case.SIMPLE_VISITE_PRISON);
+        assertThat(joueur.caseJoueur()).isEqualTo(Case.SIMPLE_VISITE_PRISON);
     }
 
     @Disabled("Test de statistiques de calcul des fréquences de passage sur les cases.")
@@ -142,7 +142,7 @@ class JoueurServiceTest {
         Map<Integer, Long> passages = new HashMap<>();
         for (long i = 0L; i < nbTours; i++) {
             joueurService.jouerTour(joueur); // Utilise la méthode complète
-            passages.merge(joueur.getPosition(), 1L, Long::sum);
+            passages.merge(joueur.position(), 1L, Long::sum);
             if (i % 1_000_000 == 0 && i != 0) {
                 System.out.println("Tour en cours : " + i + "/" + nbTours);
             }
@@ -166,13 +166,13 @@ class JoueurServiceTest {
             .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
             .map(java.util.Map.Entry::getKey)
             .toList();
-        System.out.println("Le joueur a : " + joueur.getArgent());
+        System.out.println("Le joueur a : " + joueur.argent());
 
         // Classement par groupe (utilisation du champ Groupe de Case)
         Map<String, Long> passagesParGroupe = new HashMap<>();
         for (Case c : Case.values()) {
             String nomGroupe = c.getGroupe().map(Enum::name).orElse("SANS_GROUPE");
-            long nbPassages = passages.getOrDefault(c.getPositionSurPlateau(), 0L);
+            long nbPassages = passages.getOrDefault(c.positionSurPlateau(), 0L);
             passagesParGroupe.merge(nomGroupe, nbPassages, Long::sum);
         }
         System.out.println("\nClassement des groupes de cases (par nombre de passages décroissant) :");
@@ -209,7 +209,7 @@ class JoueurServiceTest {
 
         // Then
         then(piochableServiceSpy).should(times(1)).piocher(partie.piocheCartesChance());
-        assertThat(joueur.getCaseJoueur()).isEqualTo(Case.HENRI_MARTIN);
+        assertThat(joueur.caseJoueur()).isEqualTo(Case.HENRI_MARTIN);
     }
 
 }

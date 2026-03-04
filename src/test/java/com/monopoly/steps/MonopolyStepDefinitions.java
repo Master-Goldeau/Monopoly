@@ -83,17 +83,19 @@ public class MonopolyStepDefinitions {
             joueurService.deplacer(joueur, caseObtenue);
         }
         if (Case.ALLER_EN_PRISON == caseAttendue) {
-            assertThat(joueur.getPosition()).isEqualTo(Case.SIMPLE_VISITE_PRISON.getPositionSurPlateau());
+            assertThat(joueur.position()).isEqualTo(Case.SIMPLE_VISITE_PRISON.positionSurPlateau());
         } else {
-            assertThat(joueur.getCaseJoueur()).isEqualTo(caseAttendue);
+            assertThat(joueur.caseJoueur()).isEqualTo(caseAttendue);
         }
         lancerDes = null; // Réinitialise le lancer pour éviter les interférences avec d'autres étapes
     }
 
     @Et("il doit aller en prison")
     public void il_doit_aller_en_prison() {
-        assertThat(joueur.getCaseJoueur()).isEqualTo(Case.allerEnPrison());
-        assertThat(joueur.getPosition()).isEqualTo(Case.SIMPLE_VISITE_PRISON.getPositionSurPlateau());
+        assertThat(joueur.caseJoueur()).isEqualTo(Case.SIMPLE_VISITE_PRISON);
+        assertThat(joueur.position()).isEqualTo(Case.SIMPLE_VISITE_PRISON.positionSurPlateau());
+        assertThat(joueur.estEnPrison()).isTrue();
+        assertThat(joueur.nombreDeToursEnPrison()).isZero();
     }
 
     @Et("il doit piocher une carte {string}")
@@ -119,6 +121,6 @@ public class MonopolyStepDefinitions {
 
     @Et("il doit avoir {int}")
     public void il_doit_avoir(int argentFinal) {
-        assertThat(joueur.getArgent()).isEqualTo(argentFinal);
+        assertThat(joueur.argent()).isEqualTo(argentFinal);
     }
 }
