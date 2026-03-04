@@ -13,7 +13,7 @@ import com.monopoly.plateau.pioche.service.IPiochableService;
 import org.springframework.stereotype.Service;
 
 import static com.monopoly.plateau.Constantes.PLATEAU;
-import static com.monopoly.plateau.constantes.Case.allerEnPrison;
+import static com.monopoly.plateau.Constantes.SALAIRE_CASE_DEPART;
 
 @Service
 public class JoueurService implements IJoueurService {
@@ -31,48 +31,52 @@ public class JoueurService implements IJoueurService {
     }
 
     public LancerDes lancerDesEtGererDoublesConsecutifs(Joueur joueur) {
-        LancerDes resultat = lancerDes(joueur);
+        LancerDes resultat = lancersService.lancerDeuxDesSix(joueur);
         gererDoubleConsecutifs(joueur, resultat);
         return resultat;
     }
 
-    private LancerDes lancerDes(Joueur joueur) {
-        return lancersService.lancerDeuxDesSix(joueur);
-    }
-
     private void gererDoubleConsecutifs(Joueur joueur, LancerDes resultat) {
         if (resultat.estUnDouble()) {
-            joueur.setDoubleConsecutifs(joueur.getDoubleConsecutifs() + 1);
+            incrementerDoublesConsecutifs(joueur);
             if (joueur.aTroisDoublesConsecutifs()) {
-                deplacer(joueur, allerEnPrison());
+                deplacer(joueur, allerEnPrison(joueur));
             }
         } else {
             resetDoublesConsecutifs(joueur);
         }
     }
 
+    private static void incrementerDoublesConsecutifs(Joueur joueur) {
+        joueur.setDoubleConsecutifs(joueur.doubleConsecutifs() + 1);
+    }
+
     @Override
     public void deplacer(Joueur joueur, Case destination) {
         if (Case.ALLER_EN_PRISON == destination) {
-            destination = allerEnPrison();
+            destination = allerEnPrison(joueur);
+        }
+        if(doitJoueurToucherSalaireCaseDepart(joueur, destination.positionSurPlateau())){
+            joueur.recevoirArgent(SALAIRE_CASE_DEPART);
         }
         joueur.setCaseJoueur(destination);
     }
 
-    private static boolean vaJoueurSarreterOuPasserLaCaseDepart(Joueur joueur, int positionArrivee) {
-        return Case.DEPART.getPositionSurPlateau() == joueur.getPosition()
-                || positionArrivee < joueur.getPosition();
-    } //TODO
+    private static Case allerEnPrison(Joueur joueur) {
+        joueur.setEstEnPrison(true);
+        return Case.SIMPLE_VISITE_PRISON;
+    }
+
+    private static boolean doitJoueurToucherSalaireCaseDepart(Joueur joueur, int positionArrivee) {
+        return !joueur.estEnPrison() &&
+                positionArrivee <= joueur.position();
+    }
 
     public Case getDestinationApresLancer(Joueur joueur, LancerDes valeurLancerDes) {
         if (joueur.aTroisDoublesConsecutifs()) {
-            return allerEnPrison();
+            return allerEnPrison(joueur);
         }
-        int positionArrivee = (joueur.getPosition() + valeurLancerDes.getSomme()) % PLATEAU.size();
-//        if (vaJoueurSarreterOuPasserLaCaseDepart(joueur, positionArrivee)) {
-//            joueur.recevoirArgent(SALAIRE_CASE_DEPART);
-//        }
-
+        int positionArrivee = (joueur.position() + valeurLancerDes.getSomme()) % PLATEAU.size();
         return Case.depuisPosition(positionArrivee);
     }
 
@@ -93,11 +97,10 @@ public class JoueurService implements IJoueurService {
      * À utiliser uniquement pour des tests ou des traitements batch, jamais depuis le contrôleur/front.
      */
     void jouerTour(Joueur joueur) {
-        boolean rejouer;
         do {
             LancerDes resultat = lancerDesEtGererDoublesConsecutifs(joueur);
             // Si le joueur n'est pas allé en prison, déplacer normalement
-            if (Case.ALLER_EN_PRISON != joueur.getCaseJoueur()) {
+            if (Case.ALLER_EN_PRISON != joueur.caseJoueur()) {
                 Case destination = getDestinationApresLancer(joueur, resultat);
                 deplacer(joueur, destination);
                 // Pioche si la case est piochable
@@ -109,7 +112,6 @@ public class JoueurService implements IJoueurService {
                     );
                 }
             }
-            rejouer = joueur.peutRejouer();
-        } while (rejouer);
+        } while (joueur.peutRejouer());
     }
 }
