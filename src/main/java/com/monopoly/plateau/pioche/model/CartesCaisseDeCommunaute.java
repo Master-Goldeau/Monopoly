@@ -4,12 +4,12 @@ import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
 import com.monopoly.plateau.constantes.Case;
 
-import static com.monopoly.plateau.pioche.model.valeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_ANNIVERSAIRE;
+import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_ANNIVERSAIRE;
 
 public enum CartesCaisseDeCommunaute implements Piochable {
     CAISSE_DE_VACANCES(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(100),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(100),
             """
                     Votre caisse de vacances vous rapporte.
                     Recevez 100€.
@@ -17,7 +17,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     ASSURANCE_VIE(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(100),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(100),
             """
                     Votre assurance vie vous rapporte.
                     Recevez 100€.
@@ -25,7 +25,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     FRAIS_SCOLARITE(
             ActionCarte.PAYER,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(50),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(50),
             """
                     Frais de scolarité.
                     Payez 50€.
@@ -33,7 +33,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     REMBOURSEMENT_IMPOTS(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(20),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(20),
             """
                     Remboursement des impôts sur le revenu.
                     Recevez 20€.
@@ -41,7 +41,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     HOPITAL(
             ActionCarte.PAYER,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(100),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(100),
             """
                     Frais d'hôpital.
                     Payez 100€.
@@ -49,7 +49,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     ALLER_EN_PRISON(
             ActionCarte.DEPLACEMENT,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(Case.SIMPLE_VISITE_PRISON),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.SIMPLE_VISITE_PRISON),
             """
                     Allez en prison.
                     Allez tout droit en prison
@@ -60,7 +60,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     HONORAIRES_CONSULTATION(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(25),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(25),
             """
                     Honoraires de consultation.
                     Recevez 25€.
@@ -76,7 +76,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     HERITAGE(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(100),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(100),
             """
                     Vous recevez un héritage mystérieux.
                     Recevez 100€.
@@ -84,7 +84,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     VENTE_STOCK(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(50),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(50),
             """
                     La vente de votre stock vous rapporte.
                     Recevez 50€.
@@ -92,7 +92,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     BEAUTE(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(10),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(10),
             """
                     Vous avez gagné le deuxième prix du concours de beauté.
                     Recevez 10€.
@@ -100,7 +100,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     REPARATIONS(
             ActionCarte.PAYER,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(-25),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(-25),
             """
                     Vous êtes évalué pour des travaux de voirie.
                     Pour chaque maison que vous possédez payez 40€.
@@ -109,7 +109,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     AVANCEZ_CASE_DEPART(
             ActionCarte.DEPLACEMENT,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(Case.DEPART),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.DEPART),
             """
                     Avancez jusqu'à la case Départ.
                     Recevez 200€.
@@ -117,7 +117,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     ERREUR_BANQUE(
             ActionCarte.BENEFICE,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(200),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(200),
             """
                     Erreur de la banque en votre faveur.
                     Recevez 200€.
@@ -125,7 +125,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     LIBERE_PRISON(
             ActionCarte.CONSERVER,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(null),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(null),
             """
                     Vous êtes libéré de prison.
                     Cette carte peut être conservée jusqu’à ce qu’elle soit utilisée ou vendue.
@@ -133,7 +133,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     CHIOT(
             ActionCarte.PAYER,
-            new valeurEffetCarteChanceOuCaisseDeCommunaute(50),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(50),
             """
                     Vous adoptez un chiot.
                     Payez 50€.
@@ -141,10 +141,10 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     );
 
     private final ActionCarte actionCarte;
-    private final valeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet;
+    private final ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet;
     private final String description;
 
-    CartesCaisseDeCommunaute(ActionCarte actionCarte, valeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet, String description) {
+    CartesCaisseDeCommunaute(ActionCarte actionCarte, ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet, String description) {
         this.actionCarte = actionCarte;
         this.valeurEffet = valeurEffet;
         this.description = description;
