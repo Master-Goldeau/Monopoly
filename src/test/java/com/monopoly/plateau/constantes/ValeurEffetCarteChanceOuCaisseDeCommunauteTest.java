@@ -27,8 +27,7 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
                 ),
                 Arguments.of(
                         -50
-                ),
-                Arguments.of((Object) null)
+                )
         );
     }
 

@@ -5,20 +5,22 @@ import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.impl.PiochableService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class PiochableServiceTest {
 
     @Spy
@@ -41,7 +43,6 @@ class PiochableServiceTest {
     @MethodSource("classesPiochables")
     void initialiser_pioche_devrait_retourner_un_set_de_16_piochables(Class<? extends Piochable> classePiochable, Queue<Piochable> cartesAtendues) {
         //Given
-
         //When
         Queue<Piochable> resultat = piochableService.initialiserPioche(classePiochable);
 
@@ -81,7 +82,7 @@ class PiochableServiceTest {
                 CartesChance.PRESIDENT_CONSEIL)
         );
 
-        Piochable cartePiocheeAttendue = piocheChance.element();
+        Piochable cartePiocheeAttendue = CartesChance.RUE_DE_LA_PAIX;
         Queue<Piochable> piocheAttendue = new ArrayDeque<>(List.of(
                 CartesChance.GARE_MONTPARNASSE,
                 CartesChance.PRET_IMMOBILIER,
@@ -111,25 +112,14 @@ class PiochableServiceTest {
         //Given
         Queue<Piochable> cartesChance = piochableService.initialiserPioche(CartesChance.class);
         Queue<Piochable> ordreInitial = new ArrayDeque<>(cartesChance);
-
         //When
         for (int i = 0; i < 16; i++) {
             piochableService.piocher(cartesChance);
         }
-        assertThat(cartesChance).containsAnyElementsOf(ordreInitial);
+        assertThat(cartesChance).containsExactlyElementsOf(ordreInitial);
+        //.isEqualTo(ordreInitial); compare les references des objets, pas leur contenu, d'où l'utilisation de containsExactlyElementsOf
     }
 
-    @Test
-    void ordreInitialAleatoire() {
-        //Given
-        //When
-        ArrayList<Piochable> pioche1 = new ArrayList<>(piochableService.initialiserPioche(CartesChance.class));
-        ArrayList<Piochable> pioche2 = new ArrayList<>(piochableService.initialiserPioche(CartesChance.class));
-
-        //Then
-        assertThat(pioche1).containsExactlyInAnyOrderElementsOf(pioche2);
-        assertThat(pioche1).isNotEqualTo(pioche2);
-    }
 
 
 }

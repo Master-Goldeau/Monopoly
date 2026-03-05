@@ -205,7 +205,7 @@ class JoueurServiceTest {
                 .willReturn(partie);
         BDDMockito.given(piochableServiceSpy.piocher(partie.getPioche(TypePiochable.CHANCE)))
                 .willReturn(cartePiochee);
-        BDDMockito.given(lancersServiceSpy.lancerDesEtGererDoublesConsecutifs(joueur))
+        BDDMockito.given(lancersServiceSpy.lancerDeuxDesSix())
                 .willReturn(valeurLancerDes);
 
         // When
