@@ -1,5 +1,7 @@
 package com.monopoly.plateau.constantes;
 
+import com.monopoly.exception.MessagesErreur;
+
 import java.util.Optional;
 
 import static com.monopoly.plateau.constantes.TypeCase.*;
@@ -8,11 +10,11 @@ import static com.monopoly.plateau.pioche.model.TypePiochable.CHANCE;
 
 public enum Case {
 
-    DEPART("Départ", ARGENT, 200, null,0),
+    DEPART("Départ", PAIEMENT, 200, null,0),
     BELLEVILLE("Boulevard de Belleville", PROPRIETE, 60, Groupe.MARRON,1),
     CAISSE_COMMUNAUTE_2(CAISSE_DE_COMMUNAUTE.name(), PIOCHER, null, null,2),
     LECOURBE("Rue Lecourbe", PROPRIETE, 60, Groupe.MARRON,3),
-    IMPOTS("Impôts sur le revenu", ARGENT, -200, null,4),
+    IMPOTS("Impôts sur le revenu", PAIEMENT, -200, null,4),
 
     GARE_MONTPARNASSE("Gare Montparnasse", PROPRIETE, 200, Groupe.GARE,5),
     VAUGIRARD("Rue de Vaugirard", PROPRIETE, 100, Groupe.BLEU_CIEL,6),
@@ -53,7 +55,7 @@ public enum Case {
     GARE_SAINT_LAZARE("Gare Saint-Lazare", PROPRIETE, 200, Groupe.GARE,35),
     CHANCE_36(CHANCE.name(), PIOCHER, null, null,36),
     CHAMPS_ELYSEES("Avenue des Champs-Élysées", PROPRIETE, 350, Groupe.BLEU,37),
-    LUXE("Taxe de luxe", ARGENT, -100, null,38),
+    LUXE("Taxe de luxe", PAIEMENT, -100, null,38),
     RUE_DE_LA_PAIX("Rue de la Paix", PROPRIETE, 400, Groupe.BLEU,39);
 
 
@@ -75,7 +77,7 @@ public enum Case {
         return java.util.Arrays.stream(Case.values())
                 .filter(c -> c.position == i)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Aucune case à la position " + i));
+                .orElseThrow(() -> new IllegalArgumentException(MessagesErreur.AUCUNE_CASE_TROUVEE(i)));
     }
 
     public int positionSurPlateau() {
@@ -86,15 +88,15 @@ public enum Case {
         return typeCase == TypeCase.PIOCHER;
     }
 
-    public String getNom() {
+    public String nom() {
         return nom;
     }
 
-    public Optional<Groupe> getGroupe() {
+    public Optional<Groupe> groupe() {
         return Optional.ofNullable(groupe);
     }
 
-    public Optional<Integer> getMontant() {
+    public Optional<Integer> montant() {
         return Optional.ofNullable(montant);
     }
 }

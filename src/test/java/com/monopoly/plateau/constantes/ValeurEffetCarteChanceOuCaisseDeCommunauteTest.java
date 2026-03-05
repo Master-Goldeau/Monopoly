@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.monopoly.exception.Messages.ERREUR_TYPE_VALEUR_EFFET_CARTE;
+import static com.monopoly.exception.MessagesErreur.ERREUR_TYPE_VALEUR_EFFET_CARTE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 

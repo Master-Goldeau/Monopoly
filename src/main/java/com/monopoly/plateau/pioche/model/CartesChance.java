@@ -1,11 +1,6 @@
 package com.monopoly.plateau.pioche.model;
 
-import com.monopoly.joueur.model.Joueur;
-import com.monopoly.partie.model.Partie;
 import com.monopoly.plateau.constantes.Case;
-
-import java.util.Map;
-import java.util.function.Consumer;
 
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_CASE_APRES_RECUL_TROIS_CASES;
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_GARE_LA_PLUS_PROCHE;
@@ -28,8 +23,8 @@ public enum CartesChance implements Piochable {
                     """
     ),
     ALLER_EN_PRISON(
-            ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.SIMPLE_VISITE_PRISON),
+            ActionCarte.PRISON,
+            null,
             """
                     Allez en prison.
                     Allez tout droit en prison
@@ -90,7 +85,7 @@ public enum CartesChance implements Piochable {
     ),
     LIBERE_PRISON(
             ActionCarte.CONSERVER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(null),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(0),
             """
                     Vous êtes libéré de prison.
                     Cette carte peut être conservée jusqu’à ce qu’elle soit utilisée ou vendue.
@@ -137,14 +132,6 @@ public enum CartesChance implements Piochable {
                     """
     );
 
-    // Variables de classe (static) selon conventions Oracle, juste après les constantes enum
-    private static final Map<ValeurEffetCarteChanceOuCaisseDeCommunaute, Consumer<Joueur>> ACTIONS_SPECIFIQUES = Map.of(
-            DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE, joueur -> joueur.setCaseJoueur(ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueur)),
-            DEFINIR_GARE_LA_PLUS_PROCHE, joueur -> joueur.setCaseJoueur(ValeurEffetCarteChanceOuCaisseDeCommunaute.trouverProchaineGare(joueur)),
-            DEFINIR_CASE_APRES_RECUL_TROIS_CASES, joueur -> joueur.setCaseJoueur(ValeurEffetCarteChanceOuCaisseDeCommunaute.reculerDeTroisCases(joueur))
-           // DEFINIR_MONTANT_REPARATIONS, joueur -> joueur.payer(ValeurEffetCarteChanceOuCaisseDeCommunaute.calculerValeurReparation(CHANCE, joueur))
-    );
-
     // Variables d'instance
     private final ActionCarte actionCarte;
     private final ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet;
@@ -157,17 +144,6 @@ public enum CartesChance implements Piochable {
         this.description = description;
     }
 
-    // Méthodes
-    @Override
-    public void appliquerEffet(Partie partieEnCours, Joueur joueur) {
-        switch (actionCarte) {
-            case BENEFICE -> joueur.recevoirArgent(this.valeurEffet.commeMontant());
-            case PAYER -> joueur.payer(this.valeurEffet.commeMontant());
-            case DEPLACER -> definirDestination(joueur);
-            case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
-        }
-    }
-
     @Override
     public String description() {
         return this.description;
@@ -178,15 +154,13 @@ public enum CartesChance implements Piochable {
         return TypePiochable.CHANCE;
     }
 
-    private void definirDestination(Joueur joueur) {
-        //TODO Cette méthode ne dois plus être ici car il faut appeler JoueurService.déplacer pour gérer les règles de passage par la case départ, etc.
-        // Il faut trouver une solution pour faire le lien entre la carte et le service sans que la carte connaisse le service (inversion de dépendance)
+    @Override
+    public ActionCarte actionCarte() {
+        return this.actionCarte;
+    }
 
-        if (ACTIONS_SPECIFIQUES.containsKey(this.valeurEffet)) {
-            Consumer<Joueur> action = ACTIONS_SPECIFIQUES.get(this.valeurEffet);
-            action.accept(joueur);
-        } else {
-            joueur.setCaseJoueur(this.valeurEffet.commeDestination());
-        }
+    @Override
+    public ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet() {
+        return this.valeurEffet;
     }
 }

@@ -53,7 +53,7 @@ class LancersServiceTest {
         int nbLancers = 20736;
         Joueur joueur = new Joueur(Pion.CANON);
         //When
-        Stream.generate(() -> lancersService.lancerDeuxDesSix(joueur))
+        Stream.generate(() -> lancersService.lancerDesEtGererDoublesConsecutifs(joueur))
                 .limit(nbLancers)
         //Then
                 .forEach(resultatLancer -> {
@@ -70,7 +70,7 @@ class LancersServiceTest {
         Map<Integer, Integer> probabilitesObservees = new HashMap<>();
         Joueur joueur = new Joueur(Pion.CANON);
         // When
-        Stream.generate(() -> lancersService.lancerDeuxDesSix(joueur))
+        Stream.generate(() -> lancersService.lancerDesEtGererDoublesConsecutifs(joueur))
             .limit(nbLancers)
             .forEach(resultatLancer -> enregistrerResultatLancer(resultatLancer, probabilitesObservees));
         // Then

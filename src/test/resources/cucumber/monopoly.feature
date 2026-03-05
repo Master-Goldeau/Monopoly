@@ -34,7 +34,7 @@ Fonctionnalité: Déplacement du joueur sur le plateau
     Quand il lance les dés et obtient <valeurDes1> et <valeurDes2>
     Alors il doit se déplacer sur la case <caseArrivee>
     Et il doit piocher une carte "<typeCarte>"
-    Et la carte piochée est "<cartePiochee>"
+    Et la carte piochée est "<typeCarte>" "<cartePiochee>"
     Et l'effet de la carte doit être appliqué
     Et il doit se déplacer sur la case <caseFinale>
     Et il doit avoir <argentFinal>
@@ -44,7 +44,7 @@ Fonctionnalité: Déplacement du joueur sur le plateau
       | 19         | 2          | 1          | 22          | CHANCE    | BOULEVARD_VILLETTE  | 11         | 1500   | 1700        |
       | 2          | 3          | 2          | 7           | CHANCE    | RUE_DE_LA_PAIX      | 39         | 94     | 94          |
       | 34         | 1          | 1          | 36          | CHANCE    | AVENUE_HENRI_MARTIN | 24         | 1500   | 1700        |
-      | 36         | 6          | 5          | 7           | CHANCE    | SERVICE_PUBLIC      | 12         | 300    | 300         |
+      | 36         | 6          | 5          | 7           | CHANCE    | SERVICE_PUBLIC      | 12         | 300    | 500         |
       | 17         | 4          | 1          | 22          | CHANCE    | SERVICE_PUBLIC      | 28         | 200    | 200         |
       | 29         | 5          | 2          | 36          | CHANCE    | SERVICE_PUBLIC      | 12         | 1000   | 1200        |
       | 34         | 1          | 1          | 36          | CHANCE    | CASE_DEPART         | 0          | 342    | 542         |

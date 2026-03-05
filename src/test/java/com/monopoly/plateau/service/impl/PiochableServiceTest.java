@@ -3,12 +3,13 @@ package com.monopoly.plateau.service.impl;
 import com.monopoly.plateau.pioche.model.CartesCaisseDeCommunaute;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
-import com.monopoly.plateau.pioche.service.IPiochableService;
 import com.monopoly.plateau.pioche.service.impl.PiochableService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -20,7 +21,11 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class PiochableServiceTest {
 
-    private final IPiochableService piochableService = new PiochableService();
+    @Spy
+    DeplacementService deplacementServiceSpy;
+
+    @InjectMocks
+    PiochableService piochableService;
 
     public static Stream<Arguments> classesPiochables() {
         Queue<Piochable> piocheCartesChance = new ArrayDeque<>(List.of(CartesChance.values()));

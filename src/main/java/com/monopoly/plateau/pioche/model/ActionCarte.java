@@ -4,5 +4,6 @@ public enum ActionCarte {
     BENEFICE,
     PAYER,
     DEPLACER,
-    CONSERVER;
+    PRISON,
+    CONSERVER
 }

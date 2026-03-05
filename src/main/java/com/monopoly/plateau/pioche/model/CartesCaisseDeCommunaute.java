@@ -1,7 +1,5 @@
 package com.monopoly.plateau.pioche.model;
 
-import com.monopoly.joueur.model.Joueur;
-import com.monopoly.partie.model.Partie;
 import com.monopoly.plateau.constantes.Case;
 
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_ANNIVERSAIRE;
@@ -48,8 +46,8 @@ public enum CartesCaisseDeCommunaute implements Piochable {
                     """
     ),
     ALLER_EN_PRISON(
-            ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.SIMPLE_VISITE_PRISON),
+            ActionCarte.PRISON,
+            null,
             """
                     Allez en prison.
                     Allez tout droit en prison
@@ -125,7 +123,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     LIBERE_PRISON(
             ActionCarte.CONSERVER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(null),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(0),
             """
                     Vous êtes libéré de prison.
                     Cette carte peut être conservée jusqu’à ce qu’elle soit utilisée ou vendue.
@@ -151,16 +149,6 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     }
 
     @Override
-    public void appliquerEffet(Partie partieEnCours, Joueur joueur) {
-        switch (actionCarte) {
-            case BENEFICE -> joueur.recevoirArgent(this.valeurEffet.commeMontant());
-            case PAYER -> joueur.payer(this.valeurEffet.commeMontant());
-            case DEPLACER -> joueur.setCaseJoueur(this.valeurEffet.commeDestination());
-            case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
-        }
-    }
-
-    @Override
     public String description() {
         return this.description;
     }
@@ -168,5 +156,15 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     @Override
     public TypePiochable typePiochable() {
         return TypePiochable.CAISSE_DE_COMMUNAUTE;
+    }
+
+    @Override
+    public ActionCarte actionCarte() {
+        return this.actionCarte;
+    }
+
+    @Override
+    public ValeurEffetCarteChanceOuCaisseDeCommunaute valeurEffet() {
+        return this.valeurEffet;
     }
 }

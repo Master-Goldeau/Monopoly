@@ -12,6 +12,7 @@ import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.model.TypePiochable;
 import com.monopoly.plateau.pioche.service.impl.PiochableService;
+import com.monopoly.plateau.service.impl.DeplacementService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -39,13 +40,16 @@ import static org.mockito.Mockito.times;
 class JoueurServiceTest {
 
     @Spy
-    PiochableService piochableServiceSpy = new PiochableService();
+    DeplacementService deplacementService = new DeplacementService();
+
+    @Spy
+    PiochableService piochableServiceSpy = new PiochableService(deplacementService);
 
     @Spy
     PartieService partieServiceSpy = new PartieService(piochableServiceSpy);
 
     @Spy
-    LancersService lancersServiceSpy = new LancersService();
+    LancersService lancersServiceSpy = new LancersService(deplacementService);
 
 
     @InjectMocks
@@ -102,7 +106,7 @@ class JoueurServiceTest {
         //Given
 
         //When
-        joueurService.deplacer(joueur, destination);
+        deplacementService.deplacer(joueur, destination);
 
         //Then
         assertThat(joueur.caseJoueur()).isEqualTo(positionAttendue);
@@ -126,7 +130,7 @@ class JoueurServiceTest {
         // Given
         Joueur joueur = new Joueur(Case.PARC_GRATUIT);
         // When
-        joueurService.deplacer(joueur, Case.ALLER_EN_PRISON);
+        deplacementService.deplacer(joueur, Case.ALLER_EN_PRISON);
         // Then
         assertThat(joueur.caseJoueur()).isEqualTo(Case.SIMPLE_VISITE_PRISON);
     }
@@ -171,7 +175,7 @@ class JoueurServiceTest {
         // Classement par groupe (utilisation du champ Groupe de Case)
         Map<String, Long> passagesParGroupe = new HashMap<>();
         for (Case c : Case.values()) {
-            String nomGroupe = c.getGroupe().map(Enum::name).orElse("SANS_GROUPE");
+            String nomGroupe = c.groupe().map(Enum::name).orElse("SANS_GROUPE");
             long nbPassages = passages.getOrDefault(c.positionSurPlateau(), 0L);
             passagesParGroupe.merge(nomGroupe, nbPassages, Long::sum);
         }
@@ -201,7 +205,7 @@ class JoueurServiceTest {
                 .willReturn(partie);
         BDDMockito.given(piochableServiceSpy.piocher(partie.getPioche(TypePiochable.CHANCE)))
                 .willReturn(cartePiochee);
-        BDDMockito.given(lancersServiceSpy.lancerDeuxDesSix(joueur))
+        BDDMockito.given(lancersServiceSpy.lancerDesEtGererDoublesConsecutifs(joueur))
                 .willReturn(valeurLancerDes);
 
         // When

@@ -1,8 +1,13 @@
 package com.monopoly.plateau.pioche.service.impl;
 
+import com.monopoly.joueur.model.Joueur;
+import com.monopoly.partie.model.Partie;
+import com.monopoly.plateau.constantes.Case;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
+import com.monopoly.plateau.service.impl.DeplacementService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayDeque;
@@ -15,6 +20,12 @@ import java.util.Queue;
 @Service
 public class PiochableService implements IPiochableService {
 
+    private final DeplacementService deplacementService;
+
+    public PiochableService(DeplacementService deplacementService) {
+        this.deplacementService = deplacementService;
+    }
+
     @Override
     public Queue<Piochable> initialiserPioche(Class<? extends Piochable> classePiochable) {
         ArrayList<Piochable> valeurs = new ArrayList<>(Arrays.asList(classePiochable.getEnumConstants()));
@@ -26,11 +37,29 @@ public class PiochableService implements IPiochableService {
     }
 
     @Override
-    public Piochable piocher(Queue<Piochable> pioche) {
+    public Piochable piocher(@NotNull Queue<Piochable> pioche) {
         Piochable cartePiochee = pioche.poll(); //Retourne la première carte de la pioche et la supprime de celle-ci
         pioche.offer(cartePiochee); //Ajoute la carte piochée à la fin de la pioche pour qu'elle puisse être piochée à nouveau plus tard
         return cartePiochee;
     }
+
+    // Méthodes
+    @Override
+    public void appliquerEffet(Piochable cartePiochee, Partie partieEnCours, Joueur joueur) {
+        switch (cartePiochee.actionCarte()) {
+            case BENEFICE -> joueur.recevoirArgent(cartePiochee.valeurEffet().commeMontant());
+            case PAYER -> joueur.payer(cartePiochee.valeurEffet().commeMontant());
+            case PRISON -> deplacementService.allerEnPrison(joueur);
+            case DEPLACER -> definirDestinationEtDeplacer(cartePiochee, joueur);
+            case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
+        }
+    }
+
+    private void definirDestinationEtDeplacer(Piochable cartePiochee, Joueur joueur) {
+        Case destination = cartePiochee.valeurEffet().definirDestination(joueur);
+        deplacementService.deplacer(joueur, destination);
+    }
+
 
     private static void ajouterDeuxiemeCarteProchaineGareDansPiocheChance(ArrayList<Piochable> valeurs) {
         valeurs.add(CartesChance.PROCHAINE_GARE);
