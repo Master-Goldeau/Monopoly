@@ -48,7 +48,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
                     """
     ),
     ALLER_EN_PRISON(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.SIMPLE_VISITE_PRISON),
             """
                     Allez en prison.
@@ -108,7 +108,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
                     """
     ),
     AVANCEZ_CASE_DEPART(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.DEPART),
             """
                     Avancez jusqu'à la case Départ.
@@ -155,7 +155,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
         switch (actionCarte) {
             case BENEFICE -> joueur.recevoirArgent(this.valeurEffet.commeMontant());
             case PAYER -> joueur.payer(this.valeurEffet.commeMontant());
-            case DEPLACEMENT -> joueur.setCaseJoueur(this.valeurEffet.commeDestination());
+            case DEPLACER -> joueur.setCaseJoueur(this.valeurEffet.commeDestination());
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
     }

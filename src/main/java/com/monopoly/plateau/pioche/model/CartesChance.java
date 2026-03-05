@@ -20,7 +20,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     CASE_DEPART(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.DEPART),
             """
                     Avancez jusqu'à la case Départ.
@@ -28,7 +28,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     ALLER_EN_PRISON(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.SIMPLE_VISITE_PRISON),
             """
                     Allez en prison.
@@ -39,7 +39,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     SERVICE_PUBLIC(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE,
             """
                     Avancez Jusqu'au prochain service public.
@@ -49,7 +49,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     AVENUE_HENRI_MARTIN(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.HENRI_MARTIN),
             """
                     Avancez jusqu'à l’avenue Henri-Martin.
@@ -65,7 +65,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     GARE_MONTPARNASSE(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.GARE_MONTPARNASSE),
             """
                     Rendez-vous à la gare Montparnasse.
@@ -73,7 +73,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     RUE_DE_LA_PAIX(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.RUE_DE_LA_PAIX),
             """
                     Avancez jusqu'à la rue de la Paix.
@@ -97,7 +97,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     BOULEVARD_VILLETTE(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.VILLETTE),
             """
                     Avancez jusqu’à la case Boulevard de la Villette.
@@ -112,7 +112,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     RECULEZ(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             DEFINIR_CASE_APRES_RECUL_TROIS_CASES,
             """
                     Reculez de trois cases
@@ -127,7 +127,7 @@ public enum CartesChance implements Piochable {
                     """
     ),
     PROCHAINE_GARE(
-            ActionCarte.DEPLACEMENT,
+            ActionCarte.DEPLACER,
             DEFINIR_GARE_LA_PLUS_PROCHE,
             """
                     Avancez jusqu’à la prochaine gare.
@@ -163,7 +163,7 @@ public enum CartesChance implements Piochable {
         switch (actionCarte) {
             case BENEFICE -> joueur.recevoirArgent(this.valeurEffet.commeMontant());
             case PAYER -> joueur.payer(this.valeurEffet.commeMontant());
-            case DEPLACEMENT -> definirDestination(joueur);
+            case DEPLACER -> definirDestination(joueur);
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
     }
