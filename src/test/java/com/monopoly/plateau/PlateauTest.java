@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PlateauTest {
 
     @Test
-    void obtenirnomCase_devrait_retourner_le_nom_de_la_case() {
+    void get_depuis_position_devrait_retourner_la_case_attendue() {
         //Given
         int position = 3;
         Case caseAttendue = Case.LECOURBE;

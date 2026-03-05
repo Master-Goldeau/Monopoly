@@ -10,5 +10,6 @@ public enum Groupe {
     ROUGE,
     JAUNE,
     VERT,
-    BLEU
+    BLEU,
+    AUCUN
 }
