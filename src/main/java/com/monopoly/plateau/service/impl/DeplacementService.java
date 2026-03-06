@@ -2,22 +2,23 @@ package com.monopoly.plateau.service.impl;
 
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.service.ICaseService;
 import com.monopoly.plateau.service.IDeplacementService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DeplacementService implements IDeplacementService {
 
-    private final CaseService caseService;
+    private final ICaseService caseService;
 
-    public DeplacementService(CaseService caseService) {
+    public DeplacementService(ICaseService caseService) {
         this.caseService = caseService;
     }
 
     @Override
-    public void deplacer(Joueur joueur, CasePlateau destination) {
+    public void deplacerEtAppliquerEffetCase(Joueur joueur, CasePlateau destination) {
         if (CasePlateau.ALLER_EN_PRISON == destination) {
-            allerEnPrison(joueur);
+            joueur.allerEnPrison();
             return;
         }
         caseService.toucherSalaireSiPassageCaseDepart(joueur, destination);
@@ -26,9 +27,4 @@ public class DeplacementService implements IDeplacementService {
         joueur.setCaseJoueur(destination);
     }
 
-    @Override
-    public void allerEnPrison(Joueur joueur) {
-        joueur.setEstEnPrison(true);
-        joueur.setCaseJoueur(CasePlateau.SIMPLE_VISITE_PRISON);
-    }
 }

@@ -105,7 +105,7 @@ class JoueurServiceTest {
         //Given
 
         //When
-        deplacementServiceSpy.deplacer(joueur, destination);
+        deplacementServiceSpy.deplacerEtAppliquerEffetCase(joueur, destination);
 
         //Then
         assertThat(joueur.caseJoueur()).isEqualTo(positionAttendue);
@@ -129,7 +129,7 @@ class JoueurServiceTest {
         // Given
         Joueur joueur = new Joueur(CasePlateau.PARC_GRATUIT);
         // When
-        deplacementServiceSpy.deplacer(joueur, CasePlateau.ALLER_EN_PRISON);
+        deplacementServiceSpy.deplacerEtAppliquerEffetCase(joueur, CasePlateau.ALLER_EN_PRISON);
         // Then
         assertThat(joueur.caseJoueur()).isEqualTo(CasePlateau.SIMPLE_VISITE_PRISON);
     }

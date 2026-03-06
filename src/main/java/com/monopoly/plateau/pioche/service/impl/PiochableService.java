@@ -6,7 +6,7 @@ import com.monopoly.plateau.constantes.CasePlateau;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
-import com.monopoly.plateau.service.impl.DeplacementService;
+import com.monopoly.plateau.service.IDeplacementService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +20,9 @@ import java.util.Queue;
 @Service
 public class PiochableService implements IPiochableService {
 
-    private final DeplacementService deplacementService;
+    private final IDeplacementService deplacementService;
 
-    public PiochableService(DeplacementService deplacementService) {
+    public PiochableService(IDeplacementService deplacementService) {
         this.deplacementService = deplacementService;
     }
 
@@ -49,7 +49,7 @@ public class PiochableService implements IPiochableService {
         switch (cartePiochee.actionCarte()) {
             case BENEFICE -> joueur.recevoirArgent(cartePiochee.valeurEffet().commeMontant());
             case PAYER -> joueur.payer(cartePiochee.valeurEffet().commeMontant());
-            case PRISON -> deplacementService.allerEnPrison(joueur);
+            case PRISON -> joueur.allerEnPrison();
             case DEPLACER -> definirDestinationEtDeplacer(cartePiochee, joueur);
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
@@ -57,9 +57,8 @@ public class PiochableService implements IPiochableService {
 
     private void definirDestinationEtDeplacer(Piochable cartePiochee, Joueur joueur) {
         CasePlateau destination = cartePiochee.valeurEffet().definirDestination(joueur);
-        deplacementService.deplacer(joueur, destination);
+        deplacementService.deplacerEtAppliquerEffetCase(joueur, destination);
     }
-
 
     private static void ajouterDeuxiemeCarteProchaineGareDansPiocheChance(ArrayList<Piochable> valeurs) {
         valeurs.add(CartesChance.PROCHAINE_GARE);

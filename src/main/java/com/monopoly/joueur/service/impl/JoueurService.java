@@ -4,11 +4,8 @@ import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.service.IJoueurService;
 import com.monopoly.lancer.service.ILancersService;
 import com.monopoly.lancer.service.modele.LancerDes;
-import com.monopoly.partie.model.Partie;
 import com.monopoly.partie.service.IPartieService;
 import com.monopoly.plateau.constantes.CasePlateau;
-import com.monopoly.plateau.pioche.model.Piochable;
-import com.monopoly.plateau.pioche.model.TypePiochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
 import com.monopoly.plateau.service.impl.DeplacementService;
 import org.springframework.stereotype.Service;
@@ -47,15 +44,8 @@ public class JoueurService implements IJoueurService {
                 return;
             }
             CasePlateau destination = getDestinationApresLancer(joueur, lancerDes);
-            deplacementService.deplacer(joueur, destination);
-            // Pioche si la case est piochable
-            if (destination.doitPiocher()) {
-                piocherCarteEtAppliquerEffet(
-                        partieService.getPartieEnCours(),
-                        joueur,
-                        TypePiochable.depuisNom(destination.nom())
-                );
-            }
+            deplacementService.deplacerEtAppliquerEffetCase(joueur, destination);
+
     } while(joueur.peutRejouer());
 }
 
@@ -63,18 +53,4 @@ public CasePlateau getDestinationApresLancer(Joueur joueur, LancerDes valeurLanc
     int positionArrivee = (joueur.position() + valeurLancerDes.getSomme()) % PLATEAU.size();
     return CasePlateau.depuisPosition(positionArrivee);
 }
-
-public void piocherCarteEtAppliquerEffet(Partie partie, Joueur joueur, TypePiochable casePiochable) {
-    Piochable cartePiochee = piocherCarte(partie, casePiochable);
-    appliquerEffet(cartePiochee, partie, joueur);
-}
-
-private Piochable piocherCarte(Partie partie, TypePiochable typePioche) {
-    return piochableService.piocher(partie.getPioche(typePioche));
-}
-
-private void appliquerEffet(Piochable cartePiochee, Partie partie, Joueur joueur) {
-    piochableService.appliquerEffet(cartePiochee, partie, joueur);
-}
-
 }

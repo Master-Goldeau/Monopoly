@@ -110,4 +110,9 @@ public class Joueur {
         return !this.estEnPrison && this.doubleConsecutifs > 0 &&
                this.doubleConsecutifs < NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
     }
+
+    public void allerEnPrison() {
+        setEstEnPrison(true);
+        setCaseJoueur(CasePlateau.SIMPLE_VISITE_PRISON);
+    }
 }

@@ -94,7 +94,7 @@ public class MonopolyStepDefinitions {
         if (Objects.nonNull(lancerDesMock)) {
             CasePlateau casePlateauObtenue = joueurService.getDestinationApresLancer(joueur, lancerDesMock);
             assertThat(casePlateauObtenue).isEqualTo(casePlateauAttendue);
-            deplacementService.deplacer(joueur, casePlateauObtenue);
+            deplacementService.deplacerEtAppliquerEffetCase(joueur, casePlateauObtenue);
         }
         if (CasePlateau.ALLER_EN_PRISON == casePlateauAttendue) {
             assertThat(joueur.position()).isEqualTo(CasePlateau.SIMPLE_VISITE_PRISON.positionSurPlateau());
