@@ -26,6 +26,8 @@ import java.util.ArrayDeque;
 import java.util.Objects;
 import java.util.Queue;
 
+import static com.monopoly.plateau.pioche.model.TypePiochable.CAISSE_DE_COMMUNAUTE;
+import static com.monopoly.plateau.pioche.model.TypePiochable.CHANCE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -113,8 +115,12 @@ public class MonopolyStepDefinitions {
     @Et("il doit piocher une carte {string}")
     public void il_doit_piocher_une_carte(String typeCarte) {
         TypePiochable typePiochable = TypePiochable.valueOf(typeCarte);
-        assertThat(typePiochable).isEqualTo(TypePiochable.CHANCE);
         // Vérifie que le type de carte piochée est correct
+        if (Objects.equals(typeCarte, CHANCE.name())) {
+            assertThat(typePiochable).isEqualTo(CHANCE);
+        } else {
+            assertThat(typePiochable).isEqualTo(CAISSE_DE_COMMUNAUTE);
+        }
     }
 
     @Et("la carte piochée est {string} {string}")
@@ -128,7 +134,7 @@ public class MonopolyStepDefinitions {
         when(piochableServiceSpy.piocher(partie.getPioche(typePiochable)))
                 .thenReturn(cartePiocheeMock);
         // Vérifie que la carte piochée est celle attendue
-         this.cartePiochee = piochableServiceSpy.piocher(partie.getPioche(typePiochable));
+        this.cartePiochee = piochableServiceSpy.piocher(partie.getPioche(typePiochable));
         assertThat(this.cartePiochee.name()).isEqualTo(cartePiochee);
     }
 
