@@ -2,7 +2,7 @@ package com.monopoly.plateau.pioche.service.impl;
 
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.constantes.CasePlateau;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
@@ -56,7 +56,7 @@ public class PiochableService implements IPiochableService {
     }
 
     private void definirDestinationEtDeplacer(Piochable cartePiochee, Joueur joueur) {
-        Case destination = cartePiochee.valeurEffet().definirDestination(joueur);
+        CasePlateau destination = cartePiochee.valeurEffet().definirDestination(joueur);
         deplacementService.deplacer(joueur, destination);
     }
 

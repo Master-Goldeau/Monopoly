@@ -1,6 +1,6 @@
 package com.monopoly.plateau.pioche.model;
 
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.constantes.CasePlateau;
 
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_ANNIVERSAIRE;
 
@@ -107,7 +107,7 @@ public enum CartesCaisseDeCommunaute implements Piochable {
     ),
     AVANCEZ_CASE_DEPART(
             ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.DEPART),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(CasePlateau.DEPART),
             """
                     Avancez jusqu'à la case Départ.
                     Recevez 200€.

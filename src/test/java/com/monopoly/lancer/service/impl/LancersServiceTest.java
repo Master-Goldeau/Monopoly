@@ -3,6 +3,7 @@ package com.monopoly.lancer.service.impl;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.model.Pion;
 import com.monopoly.lancer.service.modele.LancerDes;
+import com.monopoly.plateau.service.impl.CaseService;
 import com.monopoly.plateau.service.impl.DeplacementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LancersServiceTest {
 
     @Spy
-    DeplacementService deplacementServiceSpy;
+    CaseService caseServiceSpy;
+
+    @Spy
+    DeplacementService deplacementServiceSpy = new DeplacementService(caseServiceSpy);
 
     @InjectMocks
     LancersService lancersService;

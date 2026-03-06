@@ -1,13 +1,13 @@
 package com.monopoly.joueur.model;
 
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.constantes.CasePlateau;
 
 import static com.monopoly.plateau.Constantes.NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
 import static com.monopoly.plateau.Constantes.SOMME_DE_DEPART;
 
 public class Joueur {
     private final Pion pion;
-    private Case caseJoueur;
+    private CasePlateau casePlateauJoueur;
     private int doubleConsecutifs;
     private int argent;
     private boolean possedeCarteLiberePrison;
@@ -16,7 +16,7 @@ public class Joueur {
 
     // Constructeurs
     public Joueur(Pion pion) {
-        this.caseJoueur = Case.DEPART;
+        this.casePlateauJoueur = CasePlateau.DEPART;
         this.doubleConsecutifs = 0;
         this.argent = SOMME_DE_DEPART;
         this.possedeCarteLiberePrison = false;
@@ -26,8 +26,8 @@ public class Joueur {
     }
 
     //Constructeur pour les TU uniquement
-    public Joueur(Case position) {
-        this.caseJoueur = position;
+    public Joueur(CasePlateau position) {
+        this.casePlateauJoueur = position;
         this.doubleConsecutifs = 0;
         this.argent = SOMME_DE_DEPART;
         this.possedeCarteLiberePrison = false;
@@ -39,16 +39,16 @@ public class Joueur {
         return pion;
     }
 
-    public Case caseJoueur() {
-        return caseJoueur;
+    public CasePlateau caseJoueur() {
+        return casePlateauJoueur;
     }
 
     public int position() {
-        return this.caseJoueur.positionSurPlateau();
+        return this.casePlateauJoueur.positionSurPlateau();
     }
 
-    public void setCaseJoueur(Case caseJoueur) {
-        this.caseJoueur = caseJoueur;
+    public void setCaseJoueur(CasePlateau casePlateauJoueur) {
+        this.casePlateauJoueur = casePlateauJoueur;
     }
 
     public int doubleConsecutifs() {
@@ -69,6 +69,10 @@ public class Joueur {
 
     public void setArgent(int argent) {
         this.argent = argent;
+    }
+
+    public boolean aCarteLiberePrison() {
+        return this.possedeCarteLiberePrison;
     }
 
     public void setPossedeCarteLiberePrison(boolean possedeCarteLiberePrison) {
@@ -92,9 +96,7 @@ public class Joueur {
     }
 
     // Méthodes métier
-    public boolean aCarteLiberePrison() {
-        return this.possedeCarteLiberePrison;
-    }
+
 
     public void recevoirArgent(int montant) {
         this.argent = this.argent + montant;

@@ -1,5 +1,6 @@
 package com.monopoly.plateau.service.impl;
 
+import com.monopoly.plateau.Constantes;
 import com.monopoly.plateau.pioche.model.CartesCaisseDeCommunaute;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
@@ -24,7 +25,10 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class PiochableServiceTest {
 
     @Spy
-    DeplacementService deplacementServiceSpy;
+    CaseService caseServiceSpy;
+
+    @Spy
+    DeplacementService deplacementServiceSpy = new DeplacementService(caseServiceSpy);
 
     @InjectMocks
     PiochableService piochableService;
@@ -48,7 +52,7 @@ class PiochableServiceTest {
 
         //Then
         assertThat(resultat)
-                .hasSize(16)
+                .hasSize(Constantes.NOMBRE_TOTAL_DE_CARTE_CHANCE_OU_CAISSE_DE_COMMUNAUTE)
                 .containsExactlyInAnyOrderElementsOf(cartesAtendues);
     }
 
@@ -108,16 +112,15 @@ class PiochableServiceTest {
     }
 
     @Test
-    void piocher_16_fois_devrait_retourner_la_liste_initialisee() {
+    void piocher_toutes_les_cartes_devrait_retourner_la_liste_initialisee() {
         //Given
         Queue<Piochable> cartesChance = piochableService.initialiserPioche(CartesChance.class);
         Queue<Piochable> ordreInitial = new ArrayDeque<>(cartesChance);
         //When
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < Constantes.NOMBRE_CASES_CHANCE_OU_CAISSE_DE_COMMUNAUTE; i++) {
             piochableService.piocher(cartesChance);
         }
         assertThat(cartesChance).containsExactlyElementsOf(ordreInitial);
-        //.isEqualTo(ordreInitial); compare les references des objets, pas leur contenu, d'où l'utilisation de containsExactlyElementsOf
     }
 
 

@@ -6,7 +6,7 @@ import com.monopoly.lancer.service.ILancersService;
 import com.monopoly.lancer.service.modele.LancerDes;
 import com.monopoly.partie.model.Partie;
 import com.monopoly.partie.service.IPartieService;
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.constantes.CasePlateau;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.model.TypePiochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
@@ -39,14 +39,14 @@ public class JoueurService implements IJoueurService {
         do {
             LancerDes lancerDes = lancersService.lancerDesEtGererDoublesConsecutifs(joueur);
             // Si le joueur est allé en prison il ne peut plus se déplacer.
-            if (Case.ALLER_EN_PRISON == joueur.caseJoueur()) {
+            if (CasePlateau.ALLER_EN_PRISON == joueur.caseJoueur()) {
                 // TODO : gérer le cas quand le joueur est en prison :
                 //  payer pour sortir, faire un double, ou utiliser carte
                 //  Négocier avec d'autres joueurs
                 //  Construire
                 return;
             }
-            Case destination = getDestinationApresLancer(joueur, lancerDes);
+            CasePlateau destination = getDestinationApresLancer(joueur, lancerDes);
             deplacementService.deplacer(joueur, destination);
             // Pioche si la case est piochable
             if (destination.doitPiocher()) {
@@ -59,9 +59,9 @@ public class JoueurService implements IJoueurService {
     } while(joueur.peutRejouer());
 }
 
-public Case getDestinationApresLancer(Joueur joueur, LancerDes valeurLancerDes) {
+public CasePlateau getDestinationApresLancer(Joueur joueur, LancerDes valeurLancerDes) {
     int positionArrivee = (joueur.position() + valeurLancerDes.getSomme()) % PLATEAU.size();
-    return Case.depuisPosition(positionArrivee);
+    return CasePlateau.depuisPosition(positionArrivee);
 }
 
 public void piocherCarteEtAppliquerEffet(Partie partie, Joueur joueur, TypePiochable casePiochable) {
