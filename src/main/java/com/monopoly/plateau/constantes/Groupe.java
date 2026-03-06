@@ -1,4 +1,4 @@
-package com.monopoly.plateau.modele.constantes;
+package com.monopoly.plateau.constantes;
 
 public enum Groupe {
     MARRON,
@@ -10,5 +10,6 @@ public enum Groupe {
     ROUGE,
     JAUNE,
     VERT,
-    BLEU
+    BLEU,
+    AUCUN
 }

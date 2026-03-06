@@ -1,14 +1,17 @@
 package com.monopoly.lancer.service.impl;
 
-import com.monopoly.lancer.service.modele.Des;
+import com.monopoly.joueur.model.Joueur;
+import com.monopoly.joueur.model.Pion;
+import com.monopoly.lancer.service.modele.LancerDes;
+import com.monopoly.plateau.service.impl.DeplacementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -18,6 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class LancersServiceTest {
+
+    @Spy
+    DeplacementService deplacementServiceSpy;
 
     @InjectMocks
     LancersService lancersService;
@@ -50,13 +56,15 @@ class LancersServiceTest {
     void lancerDeuxDesSix_devrait_retourner_deux_des_avec_une_valeur_entre_1_et_6() {
         //Given
         int nbLancers = 20736;
+        Joueur joueur = new Joueur(Pion.CANON);
         //When
-        Stream.generate(() -> lancersService.lancerDeuxDesSix())
+        Stream.generate(() -> lancersService.lancerDesEtGererDoublesConsecutifs(joueur))
                 .limit(nbLancers)
         //Then
-                .forEach(resultatLancer -> assertThat(resultatLancer)
-                        .hasSize(2)
-                        .allSatisfy(de -> assertThat(de.valeur()).isBetween(1, 6)));
+                .forEach(resultatLancer -> {
+                    assertThat(resultatLancer.de1().valeur()).isBetween(1, 6);
+                    assertThat(resultatLancer.de2().valeur()).isBetween(1, 6);
+                });
     }
 
     @Test
@@ -65,8 +73,9 @@ class LancersServiceTest {
         // Given
         int nbLancers = 2985984; // 12^6, pour une bonne approximation des probabilités théoriques
         Map<Integer, Integer> probabilitesObservees = new HashMap<>();
+        Joueur joueur = new Joueur(Pion.CANON);
         // When
-        Stream.generate(() -> lancersService.lancerDeuxDesSix())
+        Stream.generate(() -> lancersService.lancerDesEtGererDoublesConsecutifs(joueur))
             .limit(nbLancers)
             .forEach(resultatLancer -> enregistrerResultatLancer(resultatLancer, probabilitesObservees));
         // Then
@@ -83,8 +92,9 @@ class LancersServiceTest {
             });
     }
 
-    private static void enregistrerResultatLancer(List<Des> des, Map<Integer, Integer> probabilitesObservees) {
-        int sommeDesDeuxDes = des.stream().mapToInt(Des::valeur).sum();
+    private static void enregistrerResultatLancer(LancerDes lancerDes, Map<Integer, Integer> probabilitesObservees) {
+        int sommeDesDeuxDes = lancerDes.getSomme();
         probabilitesObservees.merge(sommeDesDeuxDes, 1, Integer::sum);
     }
+
 }
