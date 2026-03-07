@@ -1,6 +1,6 @@
 package com.monopoly.plateau;
 
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 
 import java.util.List;
 

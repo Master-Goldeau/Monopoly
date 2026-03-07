@@ -3,7 +3,6 @@ package com.monopoly.plateau.service.impl;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
 import com.monopoly.partie.service.IPartieService;
-import com.monopoly.plateau.constantes.CasePlateau;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.model.TypePiochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
@@ -24,52 +23,34 @@ public class CaseService implements ICaseService {
     }
 
     @Override
-    public void toucherSalaireSiPassageCaseDepart(Joueur joueur, CasePlateau destination) {
-        if (doitJoueurToucherSalaireCaseDepart(joueur, destination.positionSurPlateau())) {
-            joueur.recevoirArgent(SALAIRE_CASE_DEPART);
-        }
-    }
-
-    @Override
-    public void appliquerEffetDestination(Joueur joueur, CasePlateau destination) {
-        switch (destination.type()) {
+    public void appliquerEffetDestination(Joueur joueur) {
+        switch (joueur.caseJoueur().type()) {
+            case ALLER_EN_PRISON:
+                joueur.allerEnPrison();
+                return;
             case BENEFICE:
                 joueur.recevoirArgent(SALAIRE_CASE_DEPART);
             case PAIEMENT:
-                payer(joueur, destination);
-                break;
+                payer(joueur);
+                return;
             case PIOCHER:
                 piocherCarteEtAppliquerEffet(
                         partieService.getPartieEnCours(),
                         joueur,
-                        TypePiochable.depuisNom(destination.nom())
+                        TypePiochable.depuisNom(joueur.caseJoueur().nom())
                 );
-                break;
-
+                return;
             default:
                 // TODO : gérer les autres types de cases
         }
     }
 
-    private static void payer(Joueur joueur, CasePlateau destination) {
-        joueur.payer(destination.montant());
-    }
-
-    private static boolean doitJoueurToucherSalaireCaseDepart(Joueur joueur, int positionArrivee) {
-        return !joueur.estEnPrison() &&
-                positionArrivee < joueur.position();
+    private static void payer(Joueur joueur) {
+        joueur.payer(joueur.caseJoueur().montant());
     }
 
     private void piocherCarteEtAppliquerEffet(Partie partie, Joueur joueur, TypePiochable casePiochable) {
-        Piochable cartePiochee = piocherCarte(partie, casePiochable);
-        appliquerEffet(cartePiochee, partie, joueur);
-    }
-
-    private Piochable piocherCarte(Partie partie, TypePiochable typePioche) {
-        return piochableService.piocher(partie.getPioche(typePioche));
-    }
-
-    private void appliquerEffet(Piochable cartePiochee, Partie partie, Joueur joueur) {
+        Piochable cartePiochee = piochableService.piocher(partie.getPioche(casePiochable));
         piochableService.appliquerEffet(cartePiochee, partie, joueur);
     }
 }

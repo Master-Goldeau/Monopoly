@@ -2,6 +2,7 @@ package com.monopoly.plateau.constantes;
 
 
 import com.monopoly.joueur.model.Joueur;
+import com.monopoly.plateau.model.CasePlateau;
 import com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.params.ParameterizedTest;

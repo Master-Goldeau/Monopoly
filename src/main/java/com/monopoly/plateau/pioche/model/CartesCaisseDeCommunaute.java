@@ -1,6 +1,6 @@
 package com.monopoly.plateau.pioche.model;
 
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_ANNIVERSAIRE;
 

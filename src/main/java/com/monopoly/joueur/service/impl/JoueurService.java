@@ -1,37 +1,32 @@
 package com.monopoly.joueur.service.impl;
 
+import com.monopoly.deplacement.model.Deplacement;
+import com.monopoly.deplacement.service.impl.DeplacementService;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.service.IJoueurService;
 import com.monopoly.lancer.service.ILancersService;
 import com.monopoly.lancer.service.modele.LancerDes;
-import com.monopoly.partie.service.IPartieService;
-import com.monopoly.plateau.constantes.CasePlateau;
-import com.monopoly.plateau.pioche.service.IPiochableService;
-import com.monopoly.plateau.service.impl.DeplacementService;
+import com.monopoly.plateau.model.CasePlateau;
+import com.monopoly.plateau.service.ICaseService;
 import org.springframework.stereotype.Service;
-
-import static com.monopoly.plateau.Constantes.PLATEAU;
 
 @Service
 public class JoueurService implements IJoueurService {
 
-    private final IPartieService partieService;
     private final ILancersService lancersService;
     private final DeplacementService deplacementService;
-    private final IPiochableService piochableService;
+    private final ICaseService caseService;
 
-    public JoueurService(IPartieService partieService,
-                         ILancersService lancersService,
+    public JoueurService(ILancersService lancersService,
                          DeplacementService deplacementService,
-                         IPiochableService piochableService
-                         ) {
-        this.partieService = partieService;
+                         ICaseService caseService
+    ) {
         this.lancersService = lancersService;
         this.deplacementService = deplacementService;
-        this.piochableService = piochableService;
+        this.caseService = caseService;
     }
 
-
+    @Override
     public void jouerTour(Joueur joueur) {
         do {
             LancerDes lancerDes = lancersService.lancerDesEtGererDoublesConsecutifs(joueur);
@@ -43,14 +38,10 @@ public class JoueurService implements IJoueurService {
                 //  Construire
                 return;
             }
-            CasePlateau destination = getDestinationApresLancer(joueur, lancerDes);
-            deplacementService.deplacerEtAppliquerEffetCase(joueur, destination);
+            Deplacement deplacement = deplacementService.deplacer(joueur, lancerDes);
+            deplacementService.toucherSalaireSiPassageCaseDepart(joueur, deplacement);
+            caseService.appliquerEffetDestination(joueur);
 
-    } while(joueur.peutRejouer());
-}
-
-public CasePlateau getDestinationApresLancer(Joueur joueur, LancerDes valeurLancerDes) {
-    int positionArrivee = (joueur.position() + valeurLancerDes.getSomme()) % PLATEAU.size();
-    return CasePlateau.depuisPosition(positionArrivee);
-}
+        } while (joueur.peutRejouer());
+    }
 }

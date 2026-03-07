@@ -3,7 +3,7 @@ package com.monopoly.plateau.pioche.model;
 import com.monopoly.exception.MessagesErreur;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
 package com.monopoly.plateau.pioche.model;
 
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_CASE_APRES_RECUL_TROIS_CASES;
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_GARE_LA_PLUS_PROCHE;

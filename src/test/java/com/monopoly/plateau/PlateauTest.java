@@ -1,6 +1,6 @@
 package com.monopoly.plateau;
 
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 import com.monopoly.plateau.pioche.model.TypePiochable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

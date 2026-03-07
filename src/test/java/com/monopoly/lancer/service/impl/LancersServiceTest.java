@@ -3,13 +3,7 @@ package com.monopoly.lancer.service.impl;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.model.Pion;
 import com.monopoly.lancer.service.modele.LancerDes;
-import com.monopoly.plateau.service.impl.CaseService;
-import com.monopoly.plateau.service.impl.DeplacementService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -20,17 +14,9 @@ import static java.math.RoundingMode.HALF_UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@ExtendWith(MockitoExtension.class)
 class LancersServiceTest {
 
-    @Spy
-    CaseService caseServiceSpy;
-
-    @Spy
-    DeplacementService deplacementServiceSpy = new DeplacementService(caseServiceSpy);
-
-    @InjectMocks
-    LancersService lancersService;
+    LancersService lancersService = new LancersService(null);
     private static final BigDecimal TOTAL_COMBINAISONS = BigDecimal.valueOf(36);
     private static final int SCALE = 10;
     private static final BigDecimal TOLERANCE = new BigDecimal("0.01"); // 5%
@@ -97,7 +83,7 @@ class LancersServiceTest {
     }
 
     private static void enregistrerResultatLancer(LancerDes lancerDes, Map<Integer, Integer> probabilitesObservees) {
-        int sommeDesDeuxDes = lancerDes.getSomme();
+        int sommeDesDeuxDes = lancerDes.somme();
         probabilitesObservees.merge(sommeDesDeuxDes, 1, Integer::sum);
     }
 

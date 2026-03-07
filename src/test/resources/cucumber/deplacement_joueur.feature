@@ -14,11 +14,14 @@ Fonctionnalité: Déplacement du joueur sur le plateau
       | 31         | 2          | 6          | 39          |
       | 39         | 4          | 1          | 4           |
 
+
   Scénario: Un joueur qui fait trois doubles d'affilée va en prison
     Étant donné un joueur sur la case 0
     Quand il lance les dés et obtient 4 et 4
     Alors il doit se déplacer sur la case 8
+    Et il peut rejouer
     Et il lance les dés et obtient 2 et 2
     Alors il doit se déplacer sur la case 12
+    Et il peut rejouer
     Et il lance les dés et obtient 1 et 1
-    Alors il doit aller en prison
+    Alors il doit être en prison

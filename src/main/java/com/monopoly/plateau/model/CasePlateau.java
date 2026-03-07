@@ -1,15 +1,14 @@
-package com.monopoly.plateau.constantes;
+package com.monopoly.plateau.model;
 
 import com.monopoly.exception.MessagesErreur;
 import com.monopoly.plateau.Constantes;
 
-import static com.monopoly.plateau.constantes.TypeCase.AUCUN_OU_PRISON;
-import static com.monopoly.plateau.constantes.TypeCase.BENEFICE;
-import static com.monopoly.plateau.constantes.TypeCase.DEPLACEMENT;
-import static com.monopoly.plateau.constantes.TypeCase.NEUTRE;
-import static com.monopoly.plateau.constantes.TypeCase.PAIEMENT;
-import static com.monopoly.plateau.constantes.TypeCase.PIOCHER;
-import static com.monopoly.plateau.constantes.TypeCase.PROPRIETE;
+import static com.monopoly.plateau.model.TypeCase.AUCUN_OU_PRISON;
+import static com.monopoly.plateau.model.TypeCase.BENEFICE;
+import static com.monopoly.plateau.model.TypeCase.NEUTRE;
+import static com.monopoly.plateau.model.TypeCase.PAIEMENT;
+import static com.monopoly.plateau.model.TypeCase.PIOCHER;
+import static com.monopoly.plateau.model.TypeCase.PROPRIETE;
 import static com.monopoly.plateau.pioche.model.TypePiochable.CAISSE_DE_COMMUNAUTE;
 import static com.monopoly.plateau.pioche.model.TypePiochable.CHANCE;
 
@@ -51,7 +50,7 @@ public enum CasePlateau {
     EAU("Compagnie des eaux", PROPRIETE, 150, 28),
     LA_FAYETTE("Rue la Fayette", PROPRIETE, 280, 29),
 
-    ALLER_EN_PRISON("Aller en prison", DEPLACEMENT, null, 30),
+    ALLER_EN_PRISON("Aller en prison", TypeCase.ALLER_EN_PRISON, null, 30),
     BRETEUIL("Avenue de Breteuil", PROPRIETE, 300, 31),
     FOCH("Avenue Foch", PROPRIETE, 300, 32),
     CAISSE_COMMUNAUTE_33(CAISSE_DE_COMMUNAUTE.name(), PIOCHER, null, 33),
@@ -89,10 +88,6 @@ public enum CasePlateau {
 
     public int positionSurPlateau() {
         return position;
-    }
-
-    public boolean doitPiocher(){
-        return typeCase == TypeCase.PIOCHER;
     }
 
     public String nom() {

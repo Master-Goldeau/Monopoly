@@ -1,12 +1,13 @@
 package com.monopoly.plateau.pioche.service.impl;
 
+import com.monopoly.deplacement.model.Deplacement;
+import com.monopoly.deplacement.service.IDeplacementService;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
-import com.monopoly.plateau.service.IDeplacementService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,8 @@ public class PiochableService implements IPiochableService {
 
     private void definirDestinationEtDeplacer(Piochable cartePiochee, Joueur joueur) {
         CasePlateau destination = cartePiochee.valeurEffet().definirDestination(joueur);
-        deplacementService.deplacerEtAppliquerEffetCase(joueur, destination);
+        Deplacement deplacement = deplacementService.deplacer(joueur, destination);
+        deplacementService.toucherSalaireSiPassageCaseDepart(joueur, deplacement);
     }
 
     private static void ajouterDeuxiemeCarteProchaineGareDansPiocheChance(ArrayList<Piochable> valeurs) {

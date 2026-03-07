@@ -1,6 +1,6 @@
 package com.monopoly.joueur.model;
 
-import com.monopoly.plateau.constantes.CasePlateau;
+import com.monopoly.plateau.model.CasePlateau;
 
 import static com.monopoly.plateau.Constantes.NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
 import static com.monopoly.plateau.Constantes.SOMME_DE_DEPART;
@@ -107,7 +107,7 @@ public class Joueur {
     }
 
     public boolean peutRejouer() {
-        return !this.estEnPrison && this.doubleConsecutifs > 0 &&
+        return this.doubleConsecutifs > 0 &&
                this.doubleConsecutifs < NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
     }
 
