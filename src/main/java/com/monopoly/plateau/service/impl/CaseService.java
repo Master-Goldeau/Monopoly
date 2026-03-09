@@ -9,7 +9,9 @@ import com.monopoly.plateau.pioche.service.IPiochableService;
 import com.monopoly.plateau.service.ICaseService;
 import org.springframework.stereotype.Service;
 
+import static com.monopoly.plateau.Constantes.IMPOTS_REVENUS;
 import static com.monopoly.plateau.Constantes.SALAIRE_CASE_DEPART;
+import static com.monopoly.plateau.Constantes.TAXE_LUXE;
 
 @Service
 public class CaseService implements ICaseService {
@@ -46,7 +48,10 @@ public class CaseService implements ICaseService {
     }
 
     private static void payer(Joueur joueur) {
-        joueur.payer(joueur.caseJoueur().montant());
+        switch(joueur.caseJoueur()) {
+            case LUXE -> joueur.payer(TAXE_LUXE);
+            case IMPOTS -> joueur.payer(IMPOTS_REVENUS);
+        }
     }
 
     private void piocherCarteEtAppliquerEffet(Partie partie, Joueur joueur, TypePiochable casePiochable) {

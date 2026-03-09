@@ -21,7 +21,7 @@ public final class Constantes {
             CasePlateau.GARE_MONTPARNASSE, CasePlateau.VAUGIRARD, CasePlateau.CHANCE_7, CasePlateau.COURCELLES, CasePlateau.REPUBLIQUE,
             CasePlateau.SIMPLE_VISITE_PRISON, CasePlateau.VILLETTE, CasePlateau.ELECTRICITE, CasePlateau.NEUILLY, CasePlateau.PARADIS,
             CasePlateau.GARE_DE_LYON, CasePlateau.MOZART, CasePlateau.CAISSE_COMMUNAUTE_17, CasePlateau.SAINT_MICHEL, CasePlateau.PIGALLE,
-            CasePlateau.PARC_GRATUIT, CasePlateau.MONTAIGNE, CasePlateau.CHANCE_22, CasePlateau.MALESHERBES, CasePlateau.HENRI_MARTIN,
+            CasePlateau.PARC_GRATUIT, CasePlateau.MATIGNON, CasePlateau.CHANCE_22, CasePlateau.MALESHERBES, CasePlateau.HENRI_MARTIN,
             CasePlateau.GARE_DU_NORD, CasePlateau.SAINT_HONORE, CasePlateau.BOURSE, CasePlateau.EAU, CasePlateau.LA_FAYETTE,
             CasePlateau.ALLER_EN_PRISON, CasePlateau.BRETEUIL, CasePlateau.FOCH, CasePlateau.CAISSE_COMMUNAUTE_33, CasePlateau.CAPUCINES,
             CasePlateau.GARE_SAINT_LAZARE, CasePlateau.CHANCE_36, CasePlateau.CHAMPS_ELYSEES, CasePlateau.LUXE, CasePlateau.RUE_DE_LA_PAIX
