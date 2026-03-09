@@ -1,8 +1,10 @@
-package com.monopoly.plateau.model;
+package com.monopoly.plateau.model.proprietes;
+
+import com.monopoly.plateau.model.CasePlateau;
 
 import java.util.Map;
 
-public enum CartesPropriete {
+public enum CartesProprieteConstructibles implements CartePropriete{
     BELLEVILLE(
             CasePlateau.BELLEVILLE,
             Groupe.MARRON,
@@ -310,83 +312,42 @@ public enum CartesPropriete {
                     Construction.HOTEL, 2000
             ),
             200
-    ),
-    ELECTRICITE(
-            CasePlateau.ELECTRICITE,
-            Groupe.COMPAGNIE,
-            150,
-            Map.of(
-            ),
-            0
-    ),
-    EAU(
-            CasePlateau.EAU,
-            Groupe.COMPAGNIE,
-            150,
-            Map.of(
-            ),
-            0
-    ),
-    GARE_MONTPARNASSE(
-            CasePlateau.GARE_MONTPARNASSE,
-            Groupe.GARE,
-            200,
-            Map.of(),
-            0
-    ),
-    GARE_DE_LYON(
-            CasePlateau.GARE_DE_LYON,
-            Groupe.GARE,
-            200,
-            Map.of(),
-            0
-    ),
-    GARE_DU_NORD(
-            CasePlateau.GARE_DU_NORD,
-            Groupe.GARE,
-            200,
-            Map.of(),
-            0
-    ),
-    GARE_SAINT_LAZARE(
-            CasePlateau.GARE_SAINT_LAZARE,
-            Groupe.GARE,
-            200,
-            Map.of(),
-            0
     );
 
     private final CasePlateau casePlateau;
     private final Groupe groupe;
     private final int valeur;
     private final Map<Construction, Integer> loyers;
-    private final int prixConstruction;
+    private final int prixConstructions;
 
-    CartesPropriete(CasePlateau casePlateau, Groupe groupe, int valeur, Map<Construction, Integer> loyers, int prixConstruction) {
+    CartesProprieteConstructibles(CasePlateau casePlateau, Groupe groupe, int valeur, Map<Construction, Integer> loyers, int prixConstructions) {
         this.casePlateau = casePlateau;
         this.groupe = groupe;
         this.valeur = valeur;
         this.loyers = loyers;
-        this.prixConstruction = prixConstruction;
+        this.prixConstructions = prixConstructions;
     }
 
-    public int valeur(){
+    @Override
+    public int valeur() {
         return valeur;
     }
 
-    public Groupe groupe(){
+    @Override
+    public Groupe groupe() {
         return groupe;
     }
 
+    @Override
     public CasePlateau casePlateau() {
         return casePlateau;
     }
 
-    public Integer loyer(Construction construction) {
-        return loyers.get(construction);
+    public Integer loyer(Construction Constructions) {
+        return loyers.get(Constructions);
     }
 
-    public int getPrixConstruction() {
-        return prixConstruction;
+    public int getPrixConstructions() {
+        return prixConstructions;
     }
 }
