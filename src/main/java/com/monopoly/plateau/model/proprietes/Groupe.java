@@ -1,4 +1,4 @@
-package com.monopoly.plateau.model;
+package com.monopoly.plateau.model.proprietes;
 
 public enum Groupe {
     MARRON(2),
