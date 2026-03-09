@@ -1,14 +1,12 @@
-package com.monopoly.plateau.model;
+package com.monopoly.plateau.model.proprietes;
 
+public class Construction {
+    private final int maisons;
+    private final boolean hotel;
 
-public record Construction(int maisons, boolean hotel) {
-    public Construction {
-        if (hotel && maisons != 0) {
-            throw new IllegalArgumentException("Si hotel=true, maisons doit être 0");
-        }
-        if (!hotel && (maisons < 0 || maisons > 4)) {
-            throw new IllegalArgumentException("Maisons doit être entre 0 et 4");
-        }
+    private Construction(int maisons, boolean hotel) {
+        this.maisons = maisons;
+        this.hotel = hotel;
     }
 
     public static final Construction TERRAIN_NU = new Construction(0, false);
