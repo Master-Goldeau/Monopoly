@@ -1,4 +1,6 @@
-package com.monopoly.plateau.model.proprietes;
+package com.monopoly.proprietes.model;
+
+import java.util.List;
 
 public enum Groupe {
     MARRON(2),

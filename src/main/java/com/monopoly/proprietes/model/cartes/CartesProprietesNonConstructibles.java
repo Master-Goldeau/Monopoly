@@ -1,7 +1,8 @@
-package com.monopoly.plateau.model.proprietes;
+package com.monopoly.proprietes.model.cartes;
 
 import com.monopoly.lancer.service.modele.LancerDes;
 import com.monopoly.plateau.model.CasePlateau;
+import com.monopoly.proprietes.model.Groupe;
 
 public enum CartesProprietesNonConstructibles implements CartePropriete {
     ELECTRICITE(

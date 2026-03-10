@@ -1,4 +1,4 @@
-package com.monopoly.plateau.model.proprietes;
+package com.monopoly.proprietes.model;
 
 public class Construction {
     private final int maisons;
