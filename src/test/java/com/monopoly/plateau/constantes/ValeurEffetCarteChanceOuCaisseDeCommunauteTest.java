@@ -2,6 +2,7 @@ package com.monopoly.plateau.constantes;
 
 
 import com.monopoly.joueur.model.Joueur;
+import com.monopoly.plateau.model.CasePlateau;
 import com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +21,7 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
     public static Stream<Arguments> typesValeursEffetCarteChanceOuCaisseDeCommunauteValides() {
         return Stream.of(
                 Arguments.of(
-                        Case.ALLER_EN_PRISON
+                        CasePlateau.ALLER_EN_PRISON
                 ),
                 Arguments.of(
                         100
@@ -47,9 +48,9 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
 
     public static Stream<Arguments> joueurSurCaseChance() {
         return Stream.of(
-                Arguments.of(new Joueur(Case.CHANCE_7), Case.ELECTRICITE),
-                Arguments.of(new Joueur(Case.CHANCE_22), Case.EAU),
-                Arguments.of(new Joueur(Case.CHANCE_36), Case.ELECTRICITE)
+                Arguments.of(new Joueur(CasePlateau.CHANCE_7), CasePlateau.ELECTRICITE),
+                Arguments.of(new Joueur(CasePlateau.CHANCE_22), CasePlateau.EAU),
+                Arguments.of(new Joueur(CasePlateau.CHANCE_36), CasePlateau.ELECTRICITE)
         );
     }
 
@@ -80,10 +81,10 @@ class ValeurEffetCarteChanceOuCaisseDeCommunauteTest {
 
     @ParameterizedTest
     @MethodSource("joueurSurCaseChance")
-    void prochainServicePublic_devrait_retourer_le_prochain_service_public_DepuisCaseChance_selon_position_du_joueur(Joueur joueurSurCaseChance, Case resultatAttendu) {
+    void prochainServicePublic_devrait_retourer_le_prochain_service_public_DepuisCaseChance_selon_position_du_joueur(Joueur joueurSurCaseChance, CasePlateau resultatAttendu) {
         //Given
         //When
-        Case resultat = ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueurSurCaseChance);
+        CasePlateau resultat = ValeurEffetCarteChanceOuCaisseDeCommunaute.definirProchainServicePublic(joueurSurCaseChance);
         //Then
         AssertionsForClassTypes.assertThat(resultat).isEqualTo(resultatAttendu);
     }

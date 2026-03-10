@@ -4,7 +4,7 @@ import com.monopoly.joueur.model.Joueur;
 import com.monopoly.lancer.service.ILancersService;
 import com.monopoly.lancer.service.modele.Des;
 import com.monopoly.lancer.service.modele.LancerDes;
-import com.monopoly.plateau.service.impl.DeplacementService;
+import com.monopoly.deplacement.service.impl.DeplacementService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,7 +34,7 @@ public class LancersService implements ILancersService {
             incrementerDoublesConsecutifs(joueur);
             if (joueur.aTroisDoublesConsecutifs()) {
                 resetDoublesConsecutifs(joueur);
-                deplacementService.allerEnPrison(joueur);
+                joueur.allerEnPrison();
             }
         } else {
             resetDoublesConsecutifs(joueur);

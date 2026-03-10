@@ -3,7 +3,7 @@ package com.monopoly.plateau.pioche.model;
 import com.monopoly.exception.MessagesErreur;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.model.CasePlateau;
 
 import java.util.Optional;
 
@@ -37,7 +37,7 @@ public record ValeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
         verifierTypeValeur(valeur);
     }
 
-    public Case definirDestination(Joueur joueur) {
+    public CasePlateau definirDestination(Joueur joueur) {
         if (this.equals(DEFINIR_SERVICE_PUBLIC_LE_PLUS_PROCHE)) {
             return definirProchainServicePublic(joueur);
         }
@@ -51,28 +51,28 @@ public record ValeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
         return commeDestination();
     }
 
-    public static Case definirProchainServicePublic(Joueur joueurSurCaseChance) {
+    public static CasePlateau definirProchainServicePublic(Joueur joueurSurCaseChance) {
         return switch (joueurSurCaseChance.caseJoueur()) {
-            case CHANCE_7, CHANCE_36 -> Case.ELECTRICITE;
-            case CHANCE_22 -> Case.EAU;
+            case CHANCE_7, CHANCE_36 -> CasePlateau.ELECTRICITE;
+            case CHANCE_22 -> CasePlateau.EAU;
             default -> throw new IllegalArgumentException(MessagesErreur.CASE_NON_CHANCE);
         };
     }
 
-    public static Case trouverProchaineGare(Joueur joueurSurCaseChance) {
+    public static CasePlateau trouverProchaineGare(Joueur joueurSurCaseChance) {
         return switch (joueurSurCaseChance.caseJoueur()) {
-            case CHANCE_7 -> Case.GARE_DE_LYON;
-            case CHANCE_36 -> Case.GARE_MONTPARNASSE;
-            case CHANCE_22 -> Case.GARE_DU_NORD;
+            case CHANCE_7 -> CasePlateau.GARE_DE_LYON;
+            case CHANCE_36 -> CasePlateau.GARE_MONTPARNASSE;
+            case CHANCE_22 -> CasePlateau.GARE_DU_NORD;
             default -> throw new IllegalArgumentException(MessagesErreur.CASE_NON_CHANCE);
         };
     }
 
-    public static Case reculerDeTroisCases(Joueur joueurSurCaseChance) {
+    public static CasePlateau reculerDeTroisCases(Joueur joueurSurCaseChance) {
         return switch (joueurSurCaseChance.caseJoueur()) {
-            case CHANCE_7 -> Case.IMPOTS;
-            case CHANCE_22 -> Case.PIGALLE;
-            case CHANCE_36 -> Case.CAISSE_COMMUNAUTE_33;
+            case CHANCE_7 -> CasePlateau.IMPOTS;
+            case CHANCE_22 -> CasePlateau.PIGALLE;
+            case CHANCE_36 -> CasePlateau.CAISSE_COMMUNAUTE_33;
             default -> throw new IllegalArgumentException(MessagesErreur.CASE_NON_CHANCE);
         };
     }
@@ -85,7 +85,7 @@ public record ValeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
 
 
     private static boolean nEstNiValeurEffetACalculerNiCaseNiInteger(Object valeur) {
-        return !(valeur instanceof ValeurEffetACalculer || valeur instanceof Case || valeur instanceof Integer);
+        return !(valeur instanceof ValeurEffetACalculer || valeur instanceof CasePlateau || valeur instanceof Integer);
     }
 
     public static int calculerValeurReparation(Partie partie, Joueur joueur) {
@@ -100,10 +100,10 @@ public record ValeurEffetCarteChanceOuCaisseDeCommunaute(Object valeur) {
                 .orElseThrow(() -> new IllegalArgumentException(MessagesErreur.ERREUR_TYPE_INTEGER));
     }
 
-    public Case commeDestination() {
+    public CasePlateau commeDestination() {
         return Optional.ofNullable(valeur)
-                .filter(Case.class::isInstance)
-                .map(Case.class::cast)
+                .filter(CasePlateau.class::isInstance)
+                .map(CasePlateau.class::cast)
                 .orElseThrow(() -> new IllegalArgumentException(MessagesErreur.ERREUR_TYPE_CASE));
     }
 

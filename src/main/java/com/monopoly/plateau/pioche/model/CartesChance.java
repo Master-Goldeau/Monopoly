@@ -1,6 +1,6 @@
 package com.monopoly.plateau.pioche.model;
 
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.model.CasePlateau;
 
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_CASE_APRES_RECUL_TROIS_CASES;
 import static com.monopoly.plateau.pioche.model.ValeurEffetCarteChanceOuCaisseDeCommunaute.DEFINIR_GARE_LA_PLUS_PROCHE;
@@ -16,7 +16,7 @@ public enum CartesChance implements Piochable {
     ),
     CASE_DEPART(
             ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.DEPART),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(CasePlateau.DEPART),
             """
                     Avancez jusqu'à la case Départ.
                     Recevez 200€.
@@ -45,7 +45,7 @@ public enum CartesChance implements Piochable {
     ),
     AVENUE_HENRI_MARTIN(
             ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.HENRI_MARTIN),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(CasePlateau.HENRI_MARTIN),
             """
                     Avancez jusqu'à l’avenue Henri-Martin.
                     Si vous passez par la case Départ, recevez 200€.
@@ -61,7 +61,7 @@ public enum CartesChance implements Piochable {
     ),
     GARE_MONTPARNASSE(
             ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.GARE_MONTPARNASSE),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(CasePlateau.GARE_MONTPARNASSE),
             """
                     Rendez-vous à la gare Montparnasse.
                     Si vous passez par la case Départ, recevez 200€.
@@ -69,7 +69,7 @@ public enum CartesChance implements Piochable {
     ),
     RUE_DE_LA_PAIX(
             ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.RUE_DE_LA_PAIX),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(CasePlateau.RUE_DE_LA_PAIX),
             """
                     Avancez jusqu'à la rue de la Paix.
                     """
@@ -93,7 +93,7 @@ public enum CartesChance implements Piochable {
     ),
     BOULEVARD_VILLETTE(
             ActionCarte.DEPLACER,
-            new ValeurEffetCarteChanceOuCaisseDeCommunaute(Case.VILLETTE),
+            new ValeurEffetCarteChanceOuCaisseDeCommunaute(CasePlateau.VILLETTE),
             """
                     Avancez jusqu’à la case Boulevard de la Villette.
                     """

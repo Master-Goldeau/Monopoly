@@ -1,12 +1,13 @@
 package com.monopoly.plateau.pioche.service.impl;
 
+import com.monopoly.deplacement.model.Deplacement;
+import com.monopoly.deplacement.service.IDeplacementService;
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.partie.model.Partie;
-import com.monopoly.plateau.constantes.Case;
+import com.monopoly.plateau.model.CasePlateau;
 import com.monopoly.plateau.pioche.model.CartesChance;
 import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.plateau.pioche.service.IPiochableService;
-import com.monopoly.plateau.service.impl.DeplacementService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,9 @@ import java.util.Queue;
 @Service
 public class PiochableService implements IPiochableService {
 
-    private final DeplacementService deplacementService;
+    private final IDeplacementService deplacementService;
 
-    public PiochableService(DeplacementService deplacementService) {
+    public PiochableService(IDeplacementService deplacementService) {
         this.deplacementService = deplacementService;
     }
 
@@ -49,17 +50,17 @@ public class PiochableService implements IPiochableService {
         switch (cartePiochee.actionCarte()) {
             case BENEFICE -> joueur.recevoirArgent(cartePiochee.valeurEffet().commeMontant());
             case PAYER -> joueur.payer(cartePiochee.valeurEffet().commeMontant());
-            case PRISON -> deplacementService.allerEnPrison(joueur);
+            case PRISON -> joueur.allerEnPrison();
             case DEPLACER -> definirDestinationEtDeplacer(cartePiochee, joueur);
             case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
         }
     }
 
     private void definirDestinationEtDeplacer(Piochable cartePiochee, Joueur joueur) {
-        Case destination = cartePiochee.valeurEffet().definirDestination(joueur);
-        deplacementService.deplacer(joueur, destination);
+        CasePlateau destination = cartePiochee.valeurEffet().definirDestination(joueur);
+        Deplacement deplacement = deplacementService.deplacer(joueur, destination);
+        deplacementService.toucherSalaireSiPassageCaseDepart(joueur, deplacement);
     }
-
 
     private static void ajouterDeuxiemeCarteProchaineGareDansPiocheChance(ArrayList<Piochable> valeurs) {
         valeurs.add(CartesChance.PROCHAINE_GARE);

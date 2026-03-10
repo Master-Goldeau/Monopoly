@@ -1,4 +1,4 @@
-package com.monopoly.plateau.constantes;
+package com.monopoly.plateau.model;
 
 public enum TypeCase {
     NEUTRE,
@@ -6,6 +6,6 @@ public enum TypeCase {
     BENEFICE,
     PROPRIETE,
     AUCUN_OU_PRISON,
-    DEPLACEMENT,
+    ALLER_EN_PRISON,
     PIOCHER
 }
