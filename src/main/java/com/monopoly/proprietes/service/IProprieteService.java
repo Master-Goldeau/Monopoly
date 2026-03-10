@@ -1,13 +1,8 @@
 package com.monopoly.proprietes.service;
 
-import com.monopoly.proprietes.model.Groupe;
-import com.monopoly.proprietes.model.Propriete;
-
-import java.util.List;
+import com.monopoly.proprietes.model.cartes.CartePropriete;
 
 public interface IProprieteService {
-    int valeurHypotheque(int valeurPropriete);
-    int ValeurLeveeHypotheque(int valeurPropriete);
-    boolean estGroupeComplet(Groupe groupe, List<Propriete> proprieteDUnMemeGroupe);
-
+    int valeurHypotheque(CartePropriete cartePropriete);
+    int valeurLeveeHypotheque(CartePropriete cartePropriete);
 }

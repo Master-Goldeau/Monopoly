@@ -1,6 +1,11 @@
 package com.monopoly.joueur.model;
 
 import com.monopoly.plateau.model.CasePlateau;
+import com.monopoly.proprietes.model.Groupe;
+import com.monopoly.proprietes.model.Propriete;
+
+import java.util.List;
+import java.util.Map;
 
 import static com.monopoly.plateau.Constantes.NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
 import static com.monopoly.plateau.Constantes.SOMME_DE_DEPART;
@@ -10,6 +15,7 @@ public class Joueur {
     private CasePlateau casePlateauJoueur;
     private int doubleConsecutifs;
     private int argent;
+    private Map<Groupe, List<Propriete>> proprietes;
     private boolean possedeCarteLiberePrison;
     private boolean estEnPrison;
     private int nombreDeToursEnPrison;

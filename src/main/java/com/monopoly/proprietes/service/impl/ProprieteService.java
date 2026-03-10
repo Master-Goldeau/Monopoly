@@ -1,28 +1,18 @@
 package com.monopoly.proprietes.service.impl;
 
-import com.monopoly.proprietes.model.Groupe;
-import com.monopoly.proprietes.model.Propriete;
+import com.monopoly.proprietes.model.cartes.CartePropriete;
 import com.monopoly.proprietes.service.IProprieteService;
-
-import java.util.List;
 
 public class ProprieteService implements IProprieteService {
 
     @Override
-    public int valeurHypotheque(int valeurPropriete) {
-        return (int) (valeurPropriete * 0.5);
+    public int valeurHypotheque(CartePropriete cartePropriete) {
+        return (int) (cartePropriete.valeur() * 0.5);
     }
 
     @Override
-    public int ValeurLeveeHypotheque(int valeurPropriete) {
-        return (int) (valeurPropriete * 0.55);
+    public int valeurLeveeHypotheque(CartePropriete cartePropriete) {
+        return (int) (cartePropriete.valeur() * 0.6);
     }
 
-    @Override
-    public boolean estGroupeComplet(Groupe groupe, List<Propriete> proprieteDUnMemeGroupe){
-        return proprieteDUnMemeGroupe
-                .stream()
-                .filter(propriete -> propriete.groupe() == groupe)
-                .count() == groupe.nombreDeProprietesDansLeGroupe();
-    }
 }
