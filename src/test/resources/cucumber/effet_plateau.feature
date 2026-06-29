@@ -30,20 +30,20 @@ Fonctionnalité: Effet des cases du plateau sur le joueur
 
     Exemples:
       | caseJoueur | valeurDes1 | valeurDes2 | caseArrivee | typeCarte            | cartePiochee        | caseFinale | argent | argentFinal |
-#      | 19         | 2          | 1          | 22          | CHANCE               | BOULEVARD_VILLETTE  | 11         | 1500   | 1700        |
-#      | 2          | 3          | 2          | 7           | CHANCE               | RUE_DE_LA_PAIX      | 39         | 94     | 94          |
-#      | 34         | 1          | 1          | 36          | CHANCE               | AVENUE_HENRI_MARTIN | 24         | 1500   | 1700        |
-#      | 36         | 6          | 5          | 7           | CHANCE               | SERVICE_PUBLIC      | 12         | 300    | 500         |
-#      | 17         | 4          | 1          | 22          | CHANCE               | SERVICE_PUBLIC      | 28         | 200    | 200         |
-#      | 29         | 5          | 2          | 36          | CHANCE               | SERVICE_PUBLIC      | 12         | 1000   | 1200        |
-#      | 34         | 1          | 1          | 36          | CHANCE               | CASE_DEPART         | 0          | 342    | 542         |
+      | 19         | 2          | 1          | 22          | CHANCE               | BOULEVARD_VILLETTE  | 11         | 1500   | 1700        |
+      | 2          | 3          | 2          | 7           | CHANCE               | RUE_DE_LA_PAIX      | 39         | 94     | 94          |
+      | 34         | 1          | 1          | 36          | CHANCE               | AVENUE_HENRI_MARTIN | 24         | 1500   | 1700        |
+      | 36         | 6          | 5          | 7           | CHANCE               | SERVICE_PUBLIC      | 12         | 300    | 500         |
+      | 17         | 4          | 1          | 22          | CHANCE               | SERVICE_PUBLIC      | 28         | 200    | 200         |
+      | 29         | 5          | 2          | 36          | CHANCE               | SERVICE_PUBLIC      | 12         | 1000   | 1200        |
+      | 34         | 1          | 1          | 36          | CHANCE               | CASE_DEPART         | 0          | 342    | 542         |
       | 34         | 1          | 1          | 36          | CHANCE               | ALLER_EN_PRISON     | 10         | 648    | 648         |
-#      | 39         | 6          | 2          | 7           | CHANCE               | GARE_MONTPARNASSE   | 5          | 648    | 1048        |
-#      | 36         | 6          | 5          | 7           | CHANCE               | PROCHAINE_GARE      | 15         | 300    | 500         |
-#      | 17         | 4          | 1          | 22          | CHANCE               | PROCHAINE_GARE      | 25         | 200    | 200         |
-#      | 29         | 5          | 2          | 36          | CHANCE               | PROCHAINE_GARE      | 5          | 1000   | 1200        |
-#      | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | ALLER_EN_PRISON     | 10         | 1000   | 1000        |
-#      | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | AVANCEZ_CASE_DEPART | 0          | 1000   | 1200        |
+      | 39         | 6          | 2          | 7           | CHANCE               | GARE_MONTPARNASSE   | 5          | 648    | 1048        |
+      | 36         | 6          | 5          | 7           | CHANCE               | PROCHAINE_GARE      | 15         | 300    | 500         |
+      | 17         | 4          | 1          | 22          | CHANCE               | PROCHAINE_GARE      | 25         | 200    | 200         |
+      | 29         | 5          | 2          | 36          | CHANCE               | PROCHAINE_GARE      | 5          | 1000   | 1200        |
+      | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | ALLER_EN_PRISON     | 10         | 1000   | 1000        |
+      | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | AVANCEZ_CASE_DEPART | 0          | 1000   | 1200        |
 
   Plan du scénario: un joueur arrive sur une case de pioche, pioche une carte et son effet autre que déplacement est appliqué
     Étant donné un joueur sur la case <caseJoueur> avec <argent> euros
@@ -69,3 +69,17 @@ Fonctionnalité: Effet des cases du plateau sur le joueur
       | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | BEAUTE                  | 1000   | 1010        |
       | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | ERREUR_BANQUE           | 1000   | 1200        |
       | 29         | 1          | 3          | 33          | CAISSE_DE_COMMUNAUTE | CHIOT                   | 1000   | 950         |
+
+  Plan du scénario: un joueur arrive sur une case de pioche, pioche une carte vous êtes libéré de prison et la conserve
+    Étant donné un joueur sur la case <caseJoueur> avec <argent> euros
+    Quand il lance les dés et obtient <valeurDes1> et <valeurDes2>
+    Alors il doit se déplacer sur la case <caseArrivee>
+    Et il doit piocher une carte "<typeCarte>"
+    Et la carte piochée est "<typeCarte>" "<cartePiochee>"
+    Et il doit conserver la carte "<typeCarte>"
+    Et la pioche "<typeCarte>" a une carte en moins
+    Et il doit avoir <argent> euros
+
+    Exemples:
+      | caseJoueur | valeurDes1 | valeurDes2 | caseArrivee | typeCarte | cartePiochee  | argent |
+      | 0          | 4          | 3          | 7           | CHANCE    | LIBERE_PRISON | 1500   |

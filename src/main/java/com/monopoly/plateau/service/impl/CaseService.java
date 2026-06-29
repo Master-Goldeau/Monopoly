@@ -27,23 +27,18 @@ public class CaseService implements ICaseService {
     @Override
     public void appliquerEffetDestination(Joueur joueur) {
         switch (joueur.caseJoueur().type()) {
-            case ALLER_EN_PRISON:
-                joueur.allerEnPrison();
-                return;
-            case BENEFICE:
-                joueur.recevoirArgent(SALAIRE_CASE_DEPART);
-            case PAIEMENT:
-                payer(joueur);
-                return;
-            case PIOCHER:
+            case ALLER_EN_PRISON -> joueur.allerEnPrison();
+            case BENEFICE -> joueur.recevoirArgent(SALAIRE_CASE_DEPART);
+            case PAIEMENT -> payer(joueur);
+            case PIOCHER ->
                 piocherCarteEtAppliquerEffet(
                         partieService.getPartieEnCours(),
                         joueur,
                         TypePiochable.depuisNom(joueur.caseJoueur().nom())
                 );
-                return;
-            default:
+            default -> {
                 // TODO : gérer les autres types de cases
+            }
         }
     }
 

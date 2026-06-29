@@ -13,4 +13,6 @@ public interface IPiochableService {
     Piochable piocher(Queue<Piochable> pioche);
 
     void appliquerEffet(Piochable cartePiochee, Partie partieEnCours, Joueur joueur);
+
+    void remettreCarteDansPioche(Piochable carteUtilisee, Partie partieEnCours);
 }

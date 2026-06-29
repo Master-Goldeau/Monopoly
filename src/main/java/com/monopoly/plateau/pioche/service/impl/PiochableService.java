@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Queue;
 
+import static com.monopoly.plateau.pioche.model.ActionCarte.PRISON;
+
 @Service
 public class PiochableService implements IPiochableService {
 
@@ -40,7 +42,10 @@ public class PiochableService implements IPiochableService {
     @Override
     public Piochable piocher(@NotNull Queue<Piochable> pioche) {
         Piochable cartePiochee = pioche.poll(); //Retourne la première carte de la pioche et la supprime de celle-ci
-        pioche.offer(cartePiochee); //Ajoute la carte piochée à la fin de la pioche pour qu'elle puisse être piochée à nouveau plus tard
+        assert cartePiochee != null;
+        if (!Objects.equals(PRISON, cartePiochee.actionCarte())) {
+            pioche.offer(cartePiochee); //Ajoute la carte piochée à la fin de la pioche pour qu'elle puisse être piochée à nouveau plus tard
+        }
         return cartePiochee;
     }
 
@@ -52,8 +57,13 @@ public class PiochableService implements IPiochableService {
             case PAYER -> joueur.payer(cartePiochee.valeurEffet().commeMontant());
             case PRISON -> joueur.allerEnPrison();
             case DEPLACER -> definirDestinationEtDeplacer(cartePiochee, joueur);
-            case CONSERVER -> joueur.setPossedeCarteLiberePrison(true);
+            case CONSERVER -> joueur.ajouterCarteLiberePrison(cartePiochee);
         }
+    }
+
+    @Override
+    public void remettreCarteDansPioche(Piochable carteUtilisee, Partie partieEnCours) {
+        partieEnCours.getPioche(carteUtilisee.typePiochable()).offer(carteUtilisee);
     }
 
     private void definirDestinationEtDeplacer(Piochable cartePiochee, Joueur joueur) {
@@ -65,6 +75,8 @@ public class PiochableService implements IPiochableService {
     private static void ajouterDeuxiemeCarteProchaineGareDansPiocheChance(ArrayList<Piochable> valeurs) {
         valeurs.add(CartesChance.PROCHAINE_GARE);
     }
+
+
 
 
 }

@@ -1,7 +1,6 @@
 package com.monopoly.plateau.pioche.model;
 
-public sealed interface Piochable
-        permits CartesChance, CartesCaisseDeCommunaute {
+public sealed interface Piochable permits CartesChance, CartesCaisseDeCommunaute {
     String description();
 
     TypePiochable typePiochable();

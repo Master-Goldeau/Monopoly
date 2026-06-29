@@ -4,40 +4,58 @@ import com.monopoly.joueur.model.Joueur;
 import com.monopoly.lancer.service.ILancersService;
 import com.monopoly.lancer.service.modele.Des;
 import com.monopoly.lancer.service.modele.LancerDes;
-import com.monopoly.deplacement.service.impl.DeplacementService;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Supplier;
+
+import static com.monopoly.plateau.Constantes.NOMBRE_MAXIMUM_DE_TOUR_EN_PRISON;
 
 @Service
 public class LancersService implements ILancersService {
 
-    private final DeplacementService deplacementService;
+    private final Supplier<Des> desSupplier;
 
-    public LancersService(DeplacementService deplacementService) {
-        this.deplacementService = deplacementService;
+    public LancersService() {
+        this(Des::lancer);
+    }
+
+    public LancersService(Supplier<Des> desSupplier) {
+        this.desSupplier = desSupplier;
     }
 
     @Override
     public LancerDes lancerDesEtGererDoublesConsecutifs(Joueur joueur) {
         LancerDes resultat = lancerDeuxDesSix();
-        gererDoubleConsecutifs(joueur, resultat);
+        gererDouble(joueur, resultat);
         return resultat;
     }
 
-    //TODO : refactoriser pour que cette méthode reste privée.
-    // Elle est actuellement publique pour pouvoir être mockée dans les tests, mais cela n'est pas idéal.
-    public LancerDes lancerDeuxDesSix() {
-        return new LancerDes(Des.lancer(), Des.lancer());
+    private LancerDes lancerDeuxDesSix() {
+        return new LancerDes(desSupplier.get(), desSupplier.get());
     }
 
-    private void gererDoubleConsecutifs(Joueur joueur, LancerDes resultat) {
+    private void gererDouble(Joueur joueur, LancerDes resultat) {
         if (resultat.estUnDouble()) {
-            incrementerDoublesConsecutifs(joueur);
-            if (joueur.aTroisDoublesConsecutifs()) {
-                resetDoublesConsecutifs(joueur);
-                joueur.allerEnPrison();
+            if (joueur.estEnPrison()) {
+                // Si le joueur est en prison et fait un double,
+                // il sort de prison mais ne peut pas rejouer.
+                joueur.sortirDePrison();
+            } else {
+                incrementerDoublesConsecutifs(joueur);
+                if (joueur.aTroisDoublesConsecutifs()) {
+                    resetDoublesConsecutifs(joueur);
+                    joueur.allerEnPrison();
+                }
             }
         } else {
             resetDoublesConsecutifs(joueur);
+            if(joueur.estEnPrison()){
+                joueur.setNombreDeToursEnPrison(joueur.nombreDeToursEnPrison() +1);
+                if(joueur.nombreDeToursEnPrison() == NOMBRE_MAXIMUM_DE_TOUR_EN_PRISON){
+                    joueur.payer(50);
+                    joueur.sortirDePrison();
+                }
+            }
         }
     }
 

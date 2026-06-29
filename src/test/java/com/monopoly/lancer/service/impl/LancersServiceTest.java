@@ -2,6 +2,7 @@ package com.monopoly.lancer.service.impl;
 
 import com.monopoly.joueur.model.Joueur;
 import com.monopoly.joueur.model.Pion;
+import com.monopoly.lancer.service.modele.Des;
 import com.monopoly.lancer.service.modele.LancerDes;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LancersServiceTest {
 
-    LancersService lancersService = new LancersService(null);
+    LancersService lancersService = new LancersService(Des::lancer);
     private static final BigDecimal TOTAL_COMBINAISONS = BigDecimal.valueOf(36);
     private static final int SCALE = 10;
     private static final BigDecimal TOLERANCE = new BigDecimal("0.01"); // 5%

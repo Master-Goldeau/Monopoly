@@ -15,6 +15,7 @@ public final class Constantes {
     public static final int NOMBRE_TOTAL_DE_CARTE_CHANCE_OU_CAISSE_DE_COMMUNAUTE = 16;
 
     public static final int NOMBRE_CASES_CHANCE_OU_CAISSE_DE_COMMUNAUTE = 3;
+    public static final int NOMBRE_MAXIMUM_DE_TOUR_EN_PRISON = 3;
 
     public static final List<CasePlateau> PLATEAU = List.of(
             CasePlateau.DEPART, CasePlateau.BELLEVILLE, CasePlateau.CAISSE_COMMUNAUTE_2, CasePlateau.LECOURBE, CasePlateau.IMPOTS,

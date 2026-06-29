@@ -1,11 +1,16 @@
 package com.monopoly.joueur.model;
 
 import com.monopoly.plateau.model.CasePlateau;
+import com.monopoly.plateau.pioche.model.CartesCaisseDeCommunaute;
+import com.monopoly.plateau.pioche.model.CartesChance;
+import com.monopoly.plateau.pioche.model.Piochable;
 import com.monopoly.proprietes.model.Groupe;
 import com.monopoly.proprietes.model.Propriete;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static com.monopoly.plateau.Constantes.NOMBRE_DOUBLES_CONSECUTIFS_POUR_PRISON;
 import static com.monopoly.plateau.Constantes.SOMME_DE_DEPART;
@@ -16,7 +21,7 @@ public class Joueur {
     private int doubleConsecutifs;
     private int argent;
     private Map<Groupe, List<Propriete>> proprietes;
-    private boolean possedeCarteLiberePrison;
+    private Set<Piochable> cartesLiberePrison;
     private boolean estEnPrison;
     private int nombreDeToursEnPrison;
 
@@ -25,7 +30,7 @@ public class Joueur {
         this.casePlateauJoueur = CasePlateau.DEPART;
         this.doubleConsecutifs = 0;
         this.argent = SOMME_DE_DEPART;
-        this.possedeCarteLiberePrison = false;
+        this.cartesLiberePrison = new HashSet<>();
         this.pion = pion;
         this.estEnPrison = false;
         this.nombreDeToursEnPrison = 0;
@@ -36,7 +41,7 @@ public class Joueur {
         this.casePlateauJoueur = position;
         this.doubleConsecutifs = 0;
         this.argent = SOMME_DE_DEPART;
-        this.possedeCarteLiberePrison = false;
+        this.cartesLiberePrison = new HashSet<>();
         this.pion = Pion.CHAUSSURE;
     }
 
@@ -77,12 +82,27 @@ public class Joueur {
         this.argent = argent;
     }
 
-    public boolean aCarteLiberePrison() {
-        return this.possedeCarteLiberePrison;
+    public Set<Piochable> cartesLiberePrison() {
+        return cartesLiberePrison;
     }
 
-    public void setPossedeCarteLiberePrison(boolean possedeCarteLiberePrison) {
-        this.possedeCarteLiberePrison = possedeCarteLiberePrison;
+    public boolean possedeCarteLiberePrison() {
+        return !cartesLiberePrison.isEmpty();
+    }
+
+    public void ajouterCarteLiberePrison(Piochable carte) {
+        if (carte == CartesChance.LIBERE_PRISON || carte == CartesCaisseDeCommunaute.LIBERE_PRISON) {
+            cartesLiberePrison.add(carte);
+        }
+    }
+
+    public Piochable utiliserCarteLiberePrison() {
+        Piochable carteUtilisee = cartesLiberePrison()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Aucune carte libère de prison disponible"));
+        cartesLiberePrison.remove(carteUtilisee);
+        return carteUtilisee;
     }
 
     public boolean estEnPrison() {
@@ -121,4 +141,10 @@ public class Joueur {
         setEstEnPrison(true);
         setCaseJoueur(CasePlateau.SIMPLE_VISITE_PRISON);
     }
+
+    public void sortirDePrison() {
+        setEstEnPrison(false);
+        setNombreDeToursEnPrison(0);
+    }
+
 }

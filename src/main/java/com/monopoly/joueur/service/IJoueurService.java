@@ -4,4 +4,8 @@ import com.monopoly.joueur.model.Joueur;
 
 public interface IJoueurService {
     void jouerTour(Joueur joueur);
+
+    void payerPourSortirDePrison(Joueur joueur);
+
+    void sortirDePrisonAvecCarte(Joueur joueur);
 }

@@ -42,7 +42,10 @@ public class DeplacementService implements IDeplacementService {
     }
 
     private static boolean doitJoueurToucherSalaireCaseDepart(Deplacement deplacement) {
-        return deplacement.caseDArrivee().positionSurPlateau() <= deplacement.caseDeDepart().positionSurPlateau();
+        int positionDepart = deplacement.caseDeDepart().positionSurPlateau();
+        int positionArrivee = deplacement.caseDArrivee().positionSurPlateau();
+        // Passage par la case départ sans s'y arrêter : l'arrêt est géré par l'effet BENEFICE.
+        return positionArrivee <= positionDepart && positionArrivee != CasePlateau.DEPART.positionSurPlateau();
     }
 
 }
